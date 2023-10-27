@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace Logica.entidades
 {
-    public class UAV : Operador
+    internal class M8 : Operador
     {
-        public override double CargaMaxima => 5;
-        public UAV() {
-            this.Bateria = new Bateria( CapacidadBateria.CHICA);
-      
-          
+        public override double CargaMaxima => 250;
+        public M8()
+        {
+            this.Bateria = new Bateria(CapacidadBateria.GRANDE);
         }
+
+        
+
+
         public override void Moverse(double distancia)
         {
             throw new NotImplementedException();
