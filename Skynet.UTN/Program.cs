@@ -9,7 +9,7 @@ namespace Skynet.UTN
             UAV volador = new UAV();
 
 
-            Console.WriteLine("Hello, World!"+ volador.CargaMaxima + " carga maxima" + volador.Bateria.CargaBateria+ " la carga de la bateria ");
+            Console.WriteLine("Hello, World!"+ volador.CargaMaxima + " carga maxima" + volador.Bateria.CargaBateria + " la carga de la bateria ");
         }
     }
 }

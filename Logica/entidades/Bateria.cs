@@ -7,7 +7,6 @@
         public CapacidadBateria Capacidad { get; set; }
         public double CargaBateria { get; set; }
 
-   
         public Bateria(CapacidadBateria capacidad)
         {
             this.Capacidad = capacidad;
