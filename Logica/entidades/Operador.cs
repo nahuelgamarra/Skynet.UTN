@@ -16,7 +16,6 @@ namespace Logica.entidades
         public string Posicion { get; set; }
 
         public Operador() { }
-      public abstract void Moverse(double distancia);
-    
+        public abstract void Moverse(string distancia);
     }
 }

@@ -13,7 +13,7 @@ namespace Logica.entidades
         {
             this.Bateria = new Bateria(CapacidadBateria.MEDIANA);
         }
-        public override void Moverse(double distancia)
+        public override void Moverse(string distancia)
         {
             throw new NotImplementedException();
         }
