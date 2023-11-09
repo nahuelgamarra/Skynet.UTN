@@ -83,7 +83,7 @@ namespace Logica.entidades
         {
             private static int contadorId = 0;
 
-            private List<ElementoMapa> elementosEnCuartel = new List<ElementoMapa>();
+            private List<Operador> operadoresEnCuartel = new List<Operador>();
 
             public int Id { get; private set; }
 
@@ -93,18 +93,18 @@ namespace Logica.entidades
                 contadorId++;
             }
 
-            public void AgregarElemento(ElementoMapa elemento)
+            public void AgregarElemento(Operador operador)
             {
-                elementosEnCuartel.Add(elemento);
-                elemento.Fila = this.Fila;
-                elemento.Columna = this.Columna;
+                operadoresEnCuartel.Add(operador);
+                operador.Fila = this.Fila;
+                operador.Columna = this.Columna;
             }
 
             public void MostrarElementosEnCuartel()
             {
-                foreach (ElementoMapa elemento in elementosEnCuartel)
+                foreach (Operador elemento in operadoresEnCuartel)
                 {
-                    Console.WriteLine($"Elemento: {elemento.Nombre} en ({elemento.Fila}, {elemento.Columna})");
+                    Console.WriteLine($"Elemento: {elemento.Nombre} en ({elemento.Fila}, {elemento.Columna}) idElemento {elemento.Id}");
                 }
             }
         }
