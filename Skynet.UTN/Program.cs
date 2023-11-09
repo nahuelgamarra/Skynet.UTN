@@ -1,23 +1,24 @@
-﻿using Logica.entidades;
+﻿using Logica.entidades;  // Asegúrate de incluir esta línea
 
 namespace Skynet.UTN
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-            UAV volador = new UAV();
+            Mapa mapa = new(8, 8);
 
-
-            Console.WriteLine("Hello, World!"+ volador.CargaMaxima + " carga maxima" + volador.Bateria.CargaBateria+ " la carga de la bateria ");
-
-            Cuartel cuartel = new Cuartel();
-            cuartel.CrearOperador("UAV");
-            cuartel.CrearOperador("K9");
-            cuartel.MostrarOperadores();
-            Console.WriteLine("\n\nModificacion en el UAV 1: \n\n");
-            cuartel.ModificarOperador(0, "inicial", 500);
-            cuartel.MostrarOperadores();
+            // Crear un operador específico, por ejemplo, K9
+            Operador operador = new K9(2, 1);
+            Operador operador2 = new K9(3, 1);
+            Operador operador3 = new UAV(3, 1);
+            Operador operador4 = new UAV(3, 1);
+            mapa.AgregarElemento(operador, operador.Fila, operador.Columna);
+            mapa.AgregarElemento(operador2, operador2.Fila, operador2.Columna);
+            mapa.AgregarElemento(operador3, operador3.Fila, operador3.Columna);
+            
+            
+            mapa.MostrarMapa();
         }
     }
 }

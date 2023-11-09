@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logica.entidades
 {
+    /*
     public class Cuartel
     {
         private static int contadorId = 0;
@@ -48,7 +49,7 @@ namespace Logica.entidades
                 Console.WriteLine($"Estado: {operador.Estado}");
                 Console.WriteLine($"Carga Máxima: {operador.CargaMaxima}");
                 Console.WriteLine($"Velocidad Óptima: {operador.VelocidadOptima}");
-                Console.WriteLine($"Posición: {operador.Posicion}");
+                Console.WriteLine($"Posición: {operador.LocalizacionActual}");
                 Console.WriteLine($"Carga de la bateria: {operador.Bateria.CargaBateria}");
                 Console.WriteLine("-------------------------");
             }
@@ -68,9 +69,45 @@ namespace Logica.entidades
 
             // Cambiar las propiedades del operador
             //operador.Moverse(nuevaPosicion);
-            operador.Posicion = nuevaPosicion;
+            operador.LocalizacionActual = nuevaPosicion;
             operador.Bateria.GastarBateria(nuevaCarga);
         }
 
+    }*/
+    using System;
+    using System.Collections.Generic;
+
+    namespace Logica.entidades
+    {
+        public class Cuartel : ElementoMapa
+        {
+            private static int contadorId = 0;
+
+            private List<ElementoMapa> elementosEnCuartel = new List<ElementoMapa>();
+
+            public int Id { get; private set; }
+
+            public Cuartel(int fila, int columna) : base("Cuartel", fila, columna)
+            {
+                Id = contadorId;
+                contadorId++;
+            }
+
+            public void AgregarElemento(ElementoMapa elemento)
+            {
+                elementosEnCuartel.Add(elemento);
+                elemento.Fila = this.Fila;
+                elemento.Columna = this.Columna;
+            }
+
+            public void MostrarElementosEnCuartel()
+            {
+                foreach (ElementoMapa elemento in elementosEnCuartel)
+                {
+                    Console.WriteLine($"Elemento: {elemento.Nombre} en ({elemento.Fila}, {elemento.Columna})");
+                }
+            }
+        }
     }
 }
+
