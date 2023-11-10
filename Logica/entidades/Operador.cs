@@ -53,12 +53,14 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
     }
     public void TransferirCarga (Cuartel destino, Carga carga)
     {
+        this.sacarCarga(carga);
         destino.cargasEnCuartel.Add(carga);
 
     }
 
     public void sacarCarga(Carga carga)
     {
+
         Cargas.Remove(carga);
     }
 

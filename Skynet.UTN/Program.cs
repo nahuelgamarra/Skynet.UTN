@@ -36,7 +36,11 @@ namespace Skynet.UTN
             Console.WriteLine(cuartel.cargasEnCuartel.Count);
             Console.WriteLine("Veremos cuantas cargas hay en el operador 2 luego de pasar la carga ");
             Console.WriteLine(operador2.Cargas.Count);
-
+            operador2.TransferirCarga(cuartel, carga);
+            Console.WriteLine("Veremos cuantas cargas hay en el cuartel luego de pasar la carga ");
+            Console.WriteLine(cuartel.cargasEnCuartel.Count);
+            Console.WriteLine("Veremos cuantas cargas hay en el operador 2 luego de pasar la carga ");
+            Console.WriteLine(operador2.Cargas.Count);
         }
     }
 }

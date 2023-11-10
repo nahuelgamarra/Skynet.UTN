@@ -121,7 +121,6 @@ namespace Logica.entidades
                     Console.WriteLine(ex.Message);
                 }
              
-               
             }
 
             private void SacarCarga(Carga carga)
