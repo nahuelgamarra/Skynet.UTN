@@ -5,21 +5,20 @@
         public int Id { get; set; }
 
         public CapacidadBateria Capacidad { get; set; }
-        public double CargaBateria { get; set; }
+        public int CargaBateria { get; set; }
 
-   
         public Bateria(CapacidadBateria capacidad)
         {
             this.Capacidad = capacidad;
-            this.CargaBateria = (double)capacidad; 
+            this.CargaBateria = (int)capacidad; 
         }
 
-        public void CargarBateria(double cargaBateria)
+        public void CargarBateria(int cargaBateria)
         {
             this.CargaBateria += cargaBateria;
         }
 
-        public void GastarBateria(double gastarBateria)
+        public void GastarBateria(int gastarBateria)
         {
             this.CargaBateria -= gastarBateria;
         }
