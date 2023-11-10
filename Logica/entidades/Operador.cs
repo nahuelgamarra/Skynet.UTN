@@ -38,6 +38,38 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
         LocalizacionActual = $"Fila {Fila}, Columna {Columna}";
         return LocalizacionActual;
     }
+
+    public void TransferirBateria( Operador operador, double cantidadATransferir)
+    {
+        try
+        {
+            EstanEnLaMismaUbicacion(operador);
+            TieneCapacidadBateriaSufiente(cantidadATransferir);
+
+            double faltante = (operador.Bateria.CargaBateria - (double)operador.Bateria.Capacidad);
+            if (faltante > cantidadATransferir)
+            {
+                this.Bateria.GastarBateria(cantidadATransferir);
+                operador.Bateria.CargarBateria(cantidadATransferir);
+            }
+            else
+            {
+                operador.Bateria.CargarBateria(cantidadATransferir);
+                this.Bateria.GastarBateria(faltante);
+            }
+        }catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        
+       
+
+    }
+
+    private bool TieneCapacidadBateriaSufiente(double cantidad)
+    {
+        return this.Bateria.CargaBateria > cantidad ? true : throw new Exception("No se pude realizar la transferencia");
+    }
     
      public void TransferirCarga (Operador destico, Carga carga)
     {
@@ -47,7 +79,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
             destico.AgregarCarga(carga);
         }
         else {
-            Console.WriteLine("No se pudo transferir la carga");
+            throw new Exception("No se pudo transferir la carga.");
         }
           
     }
@@ -84,7 +116,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
 
     private bool SuperaPesoMaximo(Carga carga)
     {
-        return ObtenerPesoDeCargaActual() + carga.Peso > CargaMaxima;
+        return ObtenerPesoDeCargaActual() + carga.Peso > CargaMaxima ? true : throw new Exception("No se pude realizar la transferencia");
     }
 
     public bool EstanEnLaMismaUbicacion(Operador otroOperador)
