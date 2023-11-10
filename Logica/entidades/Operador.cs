@@ -60,9 +60,6 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
         {
             Console.WriteLine(ex.Message);
         }
-
-
-
     }
 
     private bool TieneCapacidadBateriaSufiente(double cantidad)
@@ -150,6 +147,11 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
             Console.WriteLine("Se pudo transferir toda la carga");
         }
         catch (Exception ex) { Console.WriteLine(ex.Message); }
+    }
+
+    public void LlenarBateria()
+    {
+        this.Bateria.LlenarBateria();
     }
 
 }

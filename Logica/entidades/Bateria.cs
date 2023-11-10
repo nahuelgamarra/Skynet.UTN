@@ -23,5 +23,9 @@
         {
             this.CargaBateria -= gastarBateria;
         }
+        public void LlenarBateria()
+        {
+            this.CargaBateria = (double)Capacidad;
+        }
     }
 }
