@@ -18,5 +18,13 @@ namespace Logica.entidades
             Fila = fila;
             Columna = columna;
         }
+        public virtual bool EstanEnLaMismaUbicacion(ElementoMapa otroElemento)
+        {
+            return this.Fila == otroElemento.Fila && this.Columna == otroElemento.Columna ? true : throw new Exception("No estan en la misma ubicacion");
+        }
+        public bool MismaUbicacion(ElementoMapa otroElemento)
+        {
+            return this.Fila == otroElemento.Fila && this.Columna == otroElemento.Columna;
+        }
     }
 }

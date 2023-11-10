@@ -20,6 +20,13 @@ namespace Skynet.UTN
             cuartel.AgregarElemento(operador2);
             cuartel.AgregarElemento(operador3);
 
+            operador.Fila = 1;
+            operador.Columna = 7;
+
+            Console.WriteLine($"Veremos cuantos operadores hay en el cuarte  {cuartel.ListaOperadores.Count}");
+            
+
+
             mapa.AgregarElemento(operador, operador.Fila, operador.Columna);
             mapa.AgregarElemento(operador2, operador2.Fila, operador2.Columna);
             mapa.AgregarElemento(operador3, operador3.Fila, operador3.Columna);
@@ -32,6 +39,9 @@ namespace Skynet.UTN
             cuartel.Cargas.Add(carga);
             Console.WriteLine("Veremos cuantas cargas hay en el cuartel ");
             Console.WriteLine(cuartel.Cargas.Count);
+
+
+            operador4.TransferirCarga(operador2, carga);
 
             cuartel.TransferirCarga(operador4, carga2);
             Console.WriteLine("Veremos cuantas cargas hay en el cuartel luego de pasar la carga ");
@@ -51,6 +61,10 @@ namespace Skynet.UTN
 
             Console.WriteLine("Probemos si se puede transferir carga de operador a cuartel");
             operador3.TransferirTodaLaCargaAlCuartel(cuartel);
+            cuartel.ListarEstadoDeOperadores();
+
+            ElementoMapa elemento = new ElementoMapa("Filtro",1, 7);
+            cuartel.ListarEstadoDeOperadoresEnLocalizacion(elemento);
 
         }
     }

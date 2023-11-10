@@ -124,11 +124,11 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
     {
         return ObtenerPesoDeCargaActual() + carga.Peso > CargaMaxima ? true : throw new Exception("Supera el peso maximo soportado");
     }
-
+    /*
     public bool EstanEnLaMismaUbicacion(ElementoMapa otroElemento)
     {
-        return this.Fila == otroElemento.Fila && this.Columna == otroElemento.Columna ? true : throw new Exception("No estan en la misma ubicacion");
-    }
+        return this.Fila == otroElemento.Fila && this.Columna == otroElemento.Columna;
+    }*/
     private bool ContieneCarga(Carga carga)
     {
         return this.Cargas.Contains(carga) ? true : throw new Exception("No posee la carga que quiere transferir ");
@@ -153,6 +153,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
     {
         this.Bateria.LlenarBateria();
     }
+
 
 }
 
