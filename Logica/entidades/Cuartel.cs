@@ -87,7 +87,8 @@ namespace Logica.entidades
 
             public int Id { get; private set; }
 
-            public List<Carga> cargasEnCuartel { get; private set; } = new List<Carga>();
+            //      public List<Carga> cargasEnCuartel { get; private set; } = new List<Carga>();
+            public HashSet<Carga> Cargas { get; private set; } = new HashSet<Carga>();
 
             public Cuartel(int fila, int columna) : base("Cuartel", fila, columna)
             {
@@ -125,7 +126,11 @@ namespace Logica.entidades
 
             private void SacarCarga(Carga carga)
             {
-                cargasEnCuartel.Remove(carga);
+                Cargas.Remove(carga);
+            }
+            private bool ContieneCarga(Carga carga)
+            {
+                return this.Cargas.Contains(carga) ? true : throw new Exception("No posee la carga que quiere transferir ");
             }
         }
     }

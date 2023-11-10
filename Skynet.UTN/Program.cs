@@ -26,21 +26,28 @@ namespace Skynet.UTN
             mapa.AgregarElemento(cuartel, cuartel.Fila, cuartel.Columna);
            
             Carga carga = new Carga();
+            Carga carga2 = new Carga();
             carga.Descripcion = "carga 1";
             carga.Peso = 2;
-            cuartel.cargasEnCuartel.Add(carga);
+            cuartel.Cargas.Add(carga);
             Console.WriteLine("Veremos cuantas cargas hay en el cuartel ");
-            Console.WriteLine(cuartel.cargasEnCuartel.Count);
-            cuartel.TransferirCarga(operador2, carga);
+            Console.WriteLine(cuartel.Cargas.Count);
+
+            cuartel.TransferirCarga(operador2, carga2);
             Console.WriteLine("Veremos cuantas cargas hay en el cuartel luego de pasar la carga ");
-            Console.WriteLine(cuartel.cargasEnCuartel.Count);
+            Console.WriteLine(cuartel.Cargas.Count);
+
             Console.WriteLine("Veremos cuantas cargas hay en el operador 2 luego de pasar la carga ");
             Console.WriteLine(operador2.Cargas.Count);
+
             operador2.TransferirCarga(cuartel, carga);
             Console.WriteLine("Veremos cuantas cargas hay en el cuartel luego de pasar la carga ");
-            Console.WriteLine(cuartel.cargasEnCuartel.Count);
+            Console.WriteLine(cuartel.Cargas.Count);
             Console.WriteLine("Veremos cuantas cargas hay en el operador 2 luego de pasar la carga ");
             Console.WriteLine(operador2.Cargas.Count);
+
+            Console.WriteLine("Aca vamos a tirar la carga que no esta en el op2");
+            operador2.TransferirCarga(cuartel, carga);
         }
     }
 }

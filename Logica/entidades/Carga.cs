@@ -16,6 +16,7 @@ namespace Logica.entidades
         Id= contadorId++;
         }
 
+
         
     }
 }

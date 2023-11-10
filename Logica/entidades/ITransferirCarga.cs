@@ -9,5 +9,6 @@ namespace Logica.entidades
     public interface ITransferirCarga<T>
     {
         void  TransferirCarga(T operadorDestino, Carga carga);
+        
     }
 }

@@ -16,7 +16,9 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
     public double VelocidadOptima { get; }
     public string LocalizacionActual { get; set; }
 
-    public List<Carga> Cargas { get; } = new List<Carga>();
+  
+
+    public HashSet< Carga> Cargas { get; set; }= new HashSet< Carga>();
 
     public Operador(string nombre, int fila, int columna, double cargaMaxima) : base(nombre, fila, columna)
     {
@@ -73,20 +75,34 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
     
      public void TransferirCarga (Operador destico, Carga carga)
     {
-        if (EstanEnLaMismaUbicacion(destico) && !SuperaPesoMaximo(carga))
+        try
         {
-            this.sacarCarga(carga);
-            destico.AgregarCarga(carga);
-        }
-        else {
-            throw new Exception("No se pudo transferir la carga.");
-        }
+            ContieneCarga(carga);
+            Console.WriteLine("Estamos en el metodo transferir carga para el operador ");
+            if (EstanEnLaMismaUbicacion(destico) && !SuperaPesoMaximo(carga))
+            {
+                this.sacarCarga(carga);
+                destico.AgregarCarga(carga);
+            }
+            else
+            {
+                throw new Exception("No se pudo transferir la carga.");
+            }
+        }catch(Exception ex) { Console.WriteLine(ex.Message); }
+      
           
     }
     public void TransferirCarga (Cuartel destino, Carga carga)
     {
-        this.sacarCarga(carga);
-        destino.cargasEnCuartel.Add(carga);
+        try
+        {
+            ContieneCarga(carga);
+            this.sacarCarga(carga);
+            destino.Cargas.Add(carga);
+        }
+        catch(Exception ex) { Console.WriteLine(ex.Message);
+        }
+   
 
     }
 
@@ -123,8 +139,10 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
     {
         return this.Fila == otroOperador.Fila && this.Columna == otroOperador.Columna;
     }
+     private bool ContieneCarga(Carga carga)
+    {
+        return this.Cargas.Contains(carga) ? true : throw new Exception("No posee la carga que quiere transferir ");
+    }
 
-
-   
 }
 
