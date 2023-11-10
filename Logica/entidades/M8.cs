@@ -17,7 +17,7 @@ namespace Logica.entidades
         
 
 
-        public override void Moverse(double distancia)
+        public override void Moverse(string distancia)
         {
             throw new NotImplementedException();
         }

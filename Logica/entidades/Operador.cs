@@ -9,21 +9,13 @@ namespace Logica.entidades
     public class Operador
     {
         public int Id {  get; set; }
-        public int Bateria { get; set; }
-        public string Estado {  get; set; }
-        public int CargaMaxima { get; }
+        public Bateria Bateria { get; set; }
+        public EstadoOperador Estado {  get; set; }
+        abstract public double CargaMaxima { get; }
         public double VelocidadOptima { get;}
         public string Posicion { get; set; }
 
-        public Operador(int id, int bateria, string estado, int cargaMaxima, double velocidadOptima, string posicion)
-    {
-        Id = id;
-        Bateria = bateria;
-        Estado = estado;
-        CargaMaxima = cargaMaxima;
-        VelocidadOptima = velocidadOptima;
-        Posicion = posicion;
-    }
+        public Operador() { }
     public void Mover(double distancia)
     {
         // Implementar la lógica para mover el operador y actualizar la batería y velocidad
