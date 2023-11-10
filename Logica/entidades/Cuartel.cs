@@ -79,13 +79,15 @@ namespace Logica.entidades
 
     namespace Logica.entidades
     {
-        public class Cuartel : ElementoMapa
+        public class Cuartel : ElementoMapa, ITransferirCarga<Operador>
         {
             private static int contadorId = 0;
 
             private List<Operador> operadoresEnCuartel = new List<Operador>();
 
             public int Id { get; private set; }
+
+            public List<Carga> cargasEnCuartel { get; private set; } = new List<Carga>();
 
             public Cuartel(int fila, int columna) : base("Cuartel", fila, columna)
             {
@@ -106,6 +108,25 @@ namespace Logica.entidades
                 {
                     Console.WriteLine($"Elemento: {elemento.Nombre} en ({elemento.Fila}, {elemento.Columna}) idElemento {elemento.Id}");
                 }
+            }
+
+            public void TransferirCarga(Operador operadorDestino, Carga carga)
+            {
+                try
+                {
+                    operadorDestino.AgregarCarga(carga);
+                    SacarCarga(carga);
+                }catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+             
+               
+            }
+
+            private void SacarCarga(Carga carga)
+            {
+                cargasEnCuartel.Remove(carga);
             }
         }
     }

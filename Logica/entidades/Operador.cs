@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logica.entidades.Logica.entidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Logica.entidades;
 
-public abstract class Operador : ElementoMapa
+public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITransferirCarga<Cuartel>
 {
     private static int contadorId = 0;
     public int Id { get; private set; }
@@ -37,18 +38,23 @@ public abstract class Operador : ElementoMapa
         LocalizacionActual = $"Fila {Fila}, Columna {Columna}";
         return LocalizacionActual;
     }
-
-    public void TransferirCarga(Carga carga, Operador operador)
+    
+     public void TransferirCarga (Operador destico, Carga carga)
     {
-        if (EstanEnLaMismaUbicacion(operador) && !SuperaPesoMaximo(carga))
+        if (EstanEnLaMismaUbicacion(destico) && !SuperaPesoMaximo(carga))
         {
             this.sacarCarga(carga);
-            operador.AgregarCarga(carga);
+            destico.AgregarCarga(carga);
         }
         else {
             Console.WriteLine("No se pudo transferir la carga");
         }
           
+    }
+    public void TransferirCarga (Cuartel destino, Carga carga)
+    {
+        destino.cargasEnCuartel.Add(carga);
+
     }
 
     public void sacarCarga(Carga carga)
@@ -63,7 +69,7 @@ public abstract class Operador : ElementoMapa
             Cargas.Add(carga);
         }else
         {
-            Console.WriteLine("No se pudo agregar la carga debido al peso excedido.");
+           throw new Exception("No se pudo agregar la carga debido al peso excedido.");
         }
 
 
@@ -84,5 +90,7 @@ public abstract class Operador : ElementoMapa
         return this.Fila == otroOperador.Fila && this.Columna == otroOperador.Columna;
     }
 
+
+   
 }
 
