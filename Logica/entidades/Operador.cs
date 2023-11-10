@@ -16,24 +16,20 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
     public double VelocidadOptima { get; }
     public string LocalizacionActual { get; set; }
 
-  
 
-    public HashSet< Carga> Cargas { get; set; }= new HashSet< Carga>();
+
+    public HashSet<Carga> Cargas { get; set; } = new HashSet<Carga>();
 
     public Operador(string nombre, int fila, int columna, double cargaMaxima) : base(nombre, fila, columna)
     {
-      
+
         CargaMaxima = cargaMaxima;
         Id = contadorId++;
     }
 
     public double CargaMaxima { get; private set; }
     public abstract void Moverse(double distancia);
-    public virtual string MostrarLocalizacio()
-    {
 
-        return "";
-    }
 
     public string MostrarLocalizacion()
     {
@@ -41,7 +37,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
         return LocalizacionActual;
     }
 
-    public void TransferirBateria( Operador operador, double cantidadATransferir)
+    public void TransferirBateria(Operador operador, double cantidadATransferir)
     {
         try
         {
@@ -59,40 +55,37 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
                 operador.Bateria.CargarBateria(cantidadATransferir);
                 this.Bateria.GastarBateria(faltante);
             }
-        }catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
         }
-        
-       
+
+
 
     }
 
     private bool TieneCapacidadBateriaSufiente(double cantidad)
     {
-        return this.Bateria.CargaBateria > cantidad ? true : throw new Exception("No se pude realizar la transferencia");
+        return this.Bateria.CargaBateria > cantidad ? true : throw new Exception("No puede mandar tantos mAh");
     }
-    
-     public void TransferirCarga (Operador destico, Carga carga)
+
+    public void TransferirCarga(Operador destico, Carga carga)
     {
         try
         {
             ContieneCarga(carga);
-            Console.WriteLine("Estamos en el metodo transferir carga para el operador ");
-            if (EstanEnLaMismaUbicacion(destico) && !SuperaPesoMaximo(carga))
-            {
-                this.sacarCarga(carga);
-                destico.AgregarCarga(carga);
-            }
-            else
-            {
-                throw new Exception("No se pudo transferir la carga.");
-            }
-        }catch(Exception ex) { Console.WriteLine(ex.Message); }
-      
-          
+            EstanEnLaMismaUbicacion(destico);
+            SuperaPesoMaximo(carga);
+            this.sacarCarga(carga);
+            destico.AgregarCarga(carga);
+
+        }
+        catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+
     }
-    public void TransferirCarga (Cuartel destino, Carga carga)
+    public void TransferirCarga(Cuartel destino, Carga carga)
     {
         try
         {
@@ -100,29 +93,29 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
             this.sacarCarga(carga);
             destino.Cargas.Add(carga);
         }
-        catch(Exception ex) { Console.WriteLine(ex.Message);
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
         }
-   
+
 
     }
 
     public void sacarCarga(Carga carga)
     {
-
         Cargas.Remove(carga);
     }
 
     public void AgregarCarga(Carga carga)
     {
-        if(!SuperaPesoMaximo(carga))
+        try
         {
+            SuperaPesoMaximo(carga);
             Cargas.Add(carga);
-        }else
+        }catch (Exception ex)
         {
-           throw new Exception("No se pudo agregar la carga debido al peso excedido.");
+            throw new Exception("No se pudo agregar la carga debido al peso excedido.");
         }
-
-
     }
     private double ObtenerPesoDeCargaActual()
     {
@@ -132,16 +125,31 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
 
     private bool SuperaPesoMaximo(Carga carga)
     {
-        return ObtenerPesoDeCargaActual() + carga.Peso > CargaMaxima ? true : throw new Exception("No se pude realizar la transferencia");
+        return ObtenerPesoDeCargaActual() + carga.Peso > CargaMaxima ? true : throw new Exception("Supera el peso maximo soportado");
     }
 
-    public bool EstanEnLaMismaUbicacion(Operador otroOperador)
+    public bool EstanEnLaMismaUbicacion(ElementoMapa otroElemento)
     {
-        return this.Fila == otroOperador.Fila && this.Columna == otroOperador.Columna;
+        return this.Fila == otroElemento.Fila && this.Columna == otroElemento.Columna ? true : throw new Exception("No estan en la misma ubicacion");
     }
-     private bool ContieneCarga(Carga carga)
+    private bool ContieneCarga(Carga carga)
     {
         return this.Cargas.Contains(carga) ? true : throw new Exception("No posee la carga que quiere transferir ");
+    }
+
+    public void TransferirTodaLaCargaAlCuartel(Cuartel cuartel)
+    {
+        try
+        {
+            EstanEnLaMismaUbicacion(cuartel);
+            foreach (var carga in Cargas)
+            {
+                cuartel.Cargas.Add(carga);
+            }
+            Cargas.Clear(); // Vaciar las cargas del operador después de la transferencia
+            Console.WriteLine("Se pudo transferir toda la carga");
+        }
+        catch (Exception ex) { Console.WriteLine(ex.Message); }
     }
 
 }
