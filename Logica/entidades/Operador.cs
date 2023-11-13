@@ -186,13 +186,42 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
         }
         return Bateria.CargaBateria > 0 ? true : throw new Exception("No hay bateria disponible para realizar el movimiento");
     }
-
+    /*
     public bool Moverse(int fila, int columna)
     {
         int distanciaARecorrer = Math.Abs(fila - PosicionX) + Math.Abs(columna - PosicionY);
-        BateriaDisponible();
+        BateriaDisponible();  no hace falat
         BateriaGastadaPorDistancia(distanciaARecorrer);
         return distanciaARecorrer > 0 ? true : throw new Exception("El operador ya se encuentra en la posicion indicada");
+    }
+    */
+
+    public void Moverse(int fila, int columna)
+    {
+        try
+        {
+            int distancia = calcularDistancia(fila, columna);
+            BateriaGastadaPorDistancia(distancia);
+            ActualizarPosicion(fila, columna);
+
+
+        }
+       catch(Exception ex) {
+
+            Console.WriteLine(ex.Message);
+        }
+
+
+    }
+
+    private void ActualizarPosicion(int fila, int columna)
+    {
+        throw new NotImplementedException();
+    }
+
+    private int calcularDistancia(int fila, int columna)
+    {
+      return Math.Abs(fila - PosicionX) + Math.Abs(columna - PosicionY);
     }
 }
 
