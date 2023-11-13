@@ -66,6 +66,17 @@ namespace Skynet.UTN
             ElementoMapa elemento = new ElementoMapa("Filtro",1, 7);
             cuartel.ListarEstadoDeOperadoresEnLocalizacion(elemento);
 
+
+            Console.WriteLine("Elementos del cuartel: ");
+            cuartel.MostrarElementosEnCuartel();
+            Console.WriteLine("Mover elementos:");
+            operador2.VelocidadOptima = 10;
+            operador2.MoverseYConsumirBateria(4, 5);
+            cuartel.MostrarElementosEnCuartel();
+            operador2.MoverseYConsumirBateria(4, 5);
+            cuartel.MostrarElementosEnCuartel();
+
+
         }
     }
 }
