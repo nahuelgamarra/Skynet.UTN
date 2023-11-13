@@ -6,7 +6,7 @@ namespace Logica.entidades
     {
       
 
-        public M8(int fila, int columna, double cargaMaxima) : base("K9", fila, columna, cargaMaxima)
+        public M8(int fila, int columna, double cargaMaxima) : base("M8", fila, columna, cargaMaxima)
         {
             this.Bateria = new Bateria(CapacidadBateria.GRANDE);
         }

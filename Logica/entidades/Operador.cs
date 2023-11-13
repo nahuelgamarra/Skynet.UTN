@@ -13,7 +13,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
     public int Id { get; private set; }
     public Bateria Bateria { get; set; }
     public EstadoOperador Estado { get; set; }
-    public double VelocidadOptima { get; }
+    public double VelocidadOptima { get; set; }
     public string LocalizacionActual { get; set; }
 
 
@@ -155,5 +155,33 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
     }
 
 
+    public void ValidacioParaMoverseYConsumirBateria(Operador operador, int fila, int columna)
+    {
+        try
+        {
+            BateriaDisponible(operador);
+            BateriaGastadaPorDistancia(operador, fila, columna);
+        }
+        catch (Exception ex) { Console.WriteLine(ex.Message); }
+    }
+
+    public bool BateriaDisponible(Operador operador)
+    {
+        return operador.Bateria.CargaBateria > 0 ? true : throw new Exception("No posee bateria para moverse");
+    }
+
+    public bool BateriaGastadaPorDistancia(Operador operador, int fila, int columna)
+    {
+        int distanciaARecorrer = fila + columna;
+        double tiempoEstimado = distanciaARecorrer / operador.VelocidadOptima;
+        if ((tiempoEstimado * 1000) < operador.Bateria.CargaBateria)
+        {
+            for (int i = 0; i < tiempoEstimado; i++)
+            {
+                operador.Bateria.GastarBateria(1000);
+            }
+        }
+        return operador.Bateria.CargaBateria > 0 ? true : throw new Exception("No hay bateria disponible para realizar el movimiento");
+    }
 }
 

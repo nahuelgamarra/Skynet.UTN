@@ -17,7 +17,6 @@ namespace Logica.entidades
             private static int contadorId = 0;
 
             public HashSet<Operador> ListaOperadores = new HashSet<Operador>();
-
             public int Id { get; private set; }
 
             //      public List<Carga> cargasEnCuartel { get; private set; } = new List<Carga>();
@@ -40,7 +39,7 @@ namespace Logica.entidades
             {
                 foreach (Operador elemento in ListaOperadores)
                 {
-                    Console.WriteLine($"Elemento: {elemento.Nombre} en ({elemento.Fila}, {elemento.Columna}) idElemento {elemento.Id}");
+                    Console.WriteLine($"Elemento: {elemento.Nombre} en ({elemento.Fila}, {elemento.Columna}) idElemento {elemento.Id} Bateria {elemento.Bateria.CargaBateria}");
                 }
             }
 
@@ -88,6 +87,8 @@ namespace Logica.entidades
 
                 }
             }
+
+            
           
         }
     }
