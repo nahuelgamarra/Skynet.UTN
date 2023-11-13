@@ -14,8 +14,8 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
     public Bateria Bateria { get; set; }
     public EstadoOperador Estado { get; set; }
     public double VelocidadOptima { get; set; }
-    public int PosicionX { get; set; }
-    public int PosicionY { get; set; }
+    /*public int PosicionX { get; set; }
+    public int PosicionY { get; set; }*/
 
 
 
@@ -34,9 +34,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
 
     public string MostrarLocalizacion()
     {
-        PosicionX = Fila;
-        PosicionY = Columna;
-        string LocalizacionActual = "Fila " + PosicionX + " Columna " + PosicionY;
+        string LocalizacionActual = "Fila " + Fila + " Columna " + Columna;
         return LocalizacionActual;
     }
 
@@ -163,8 +161,8 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
         try
         {
             Moverse(fila, columna);
-            PosicionX = fila;
-            PosicionY = columna;
+            Fila = fila;
+            Columna = columna;
         }
         catch (Exception ex) { Console.WriteLine(ex.Message); }
     }
@@ -216,12 +214,20 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
 
     private void ActualizarPosicion(int fila, int columna)
     {
+
         throw new NotImplementedException();
+
+        Fila = fila;
+        Columna = columna;
+
     }
 
     private int calcularDistancia(int fila, int columna)
     {
-      return Math.Abs(fila - PosicionX) + Math.Abs(columna - PosicionY);
+
+
+      return Math.Abs(fila - Fila) + Math.Abs(columna - Columna);
+
     }
 }
 

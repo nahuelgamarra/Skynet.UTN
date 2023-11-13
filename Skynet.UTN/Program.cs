@@ -71,9 +71,9 @@ namespace Skynet.UTN
             cuartel.MostrarElementosEnCuartel();
             Console.WriteLine("Mover elementos:");
             operador2.VelocidadOptima = 10;
-            operador2.MoverseYConsumirBateria(4, 5);
+         
             cuartel.MostrarElementosEnCuartel();
-            operador2.MoverseYConsumirBateria(4, 5);
+           
             cuartel.MostrarElementosEnCuartel();
 
 
