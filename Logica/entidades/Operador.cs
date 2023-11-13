@@ -158,40 +158,42 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
     }
 
 
-    public void MoverseYConsumirBateria(Operador operador, int fila, int columna)
+    public void MoverseYConsumirBateria( int fila, int columna)
     {
         try
         {
-            BateriaDisponible(operador);
-            BateriaGastadaPorDistancia(operador, fila, columna);
-            Moverse(operador, fila, columna);
+            Moverse(fila, columna);
+            BateriaDisponible();
+            BateriaGastadaPorDistancia(fila, columna);
+            PosicionX = fila;
+            PosicionY = columna;
         }
         catch (Exception ex) { Console.WriteLine(ex.Message); }
     }
 
-    public bool BateriaDisponible(Operador operador)
+    public bool BateriaDisponible()
     {
-        return operador.Bateria.CargaBateria > 0 ? true : throw new Exception("No posee bateria para moverse");
+        return Bateria.CargaBateria > 0 ? true : throw new Exception("No posee bateria para moverse");
     }
 
-    public bool BateriaGastadaPorDistancia(Operador operador, int fila, int columna)
+    public bool BateriaGastadaPorDistancia(int fila, int columna)
     {
-        int distanciaARecorrer = fila + columna;
-        double tiempoEstimado = distanciaARecorrer / operador.VelocidadOptima;
-        if ((tiempoEstimado * 1000) < operador.Bateria.CargaBateria)
+        int distanciaARecorrer = Math.Abs(fila - PosicionX) + Math.Abs(columna - PosicionY);
+        double tiempoEstimado = distanciaARecorrer / VelocidadOptima;
+        if ((tiempoEstimado * 1000) < Bateria.CargaBateria)
         {
             for (int i = 0; i < tiempoEstimado; i++)
             {
-                operador.Bateria.GastarBateria(1000);
+                Bateria.GastarBateria(1000);
             }
         }
-        return operador.Bateria.CargaBateria > 0 ? true : throw new Exception("No hay bateria disponible para realizar el movimiento");
+        return Bateria.CargaBateria > 0 ? true : throw new Exception("No hay bateria disponible para realizar el movimiento");
     }
 
-    public void Moverse(Operador operador, int fila, int columna)
+    public bool Moverse(int fila, int columna)
     {
-        operador.PosicionX = fila;
-        operador.PosicionY = columna;
+        int distanciaARecorrer = Math.Abs(fila - PosicionX) + Math.Abs(columna - PosicionY);
+        return distanciaARecorrer > 0 ? true : throw new Exception("El operador ya se encuentra en la posicion indicada");
     }
 }
 
