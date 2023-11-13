@@ -216,7 +216,8 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
 
     private void ActualizarPosicion(int fila, int columna)
     {
-        throw new NotImplementedException();
+        PosicionX = fila;
+        PosicionY = columna;
     }
 
     private int calcularDistancia(int fila, int columna)
