@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logica.entidades
 {
     public class UAV : Operador
     {
-        public override double CargaMaxima => 5;
-        public UAV() {
-            this.Bateria = new Bateria( CapacidadBateria.CHICA);
-      
-          
+  
+
+        public UAV(int fila, int columna, double cargaMaxima) : base("UAV", fila, columna, cargaMaxima)
+        {
+            this.Bateria = new Bateria(CapacidadBateria.CHICA);
         }
+
         public override void Moverse(double distancia)
         {
-            throw new NotImplementedException();
+            // Implementa la lógica de movimiento para UAV
         }
     }
 }

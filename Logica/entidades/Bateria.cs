@@ -7,10 +7,11 @@
         public CapacidadBateria Capacidad { get; set; }
         public int CargaBateria { get; set; }
 
+
         public Bateria(CapacidadBateria capacidad)
         {
             this.Capacidad = capacidad;
-            this.CargaBateria = (int)capacidad; 
+            this.CargaBateria = (int)capacidad;
         }
 
         public void CargarBateria(int cargaBateria)
@@ -21,6 +22,10 @@
         public void GastarBateria(int gastarBateria)
         {
             this.CargaBateria -= gastarBateria;
+        }
+        public void LlenarBateria()
+        {
+            this.CargaBateria = (int)Capacidad;
         }
     }
 }

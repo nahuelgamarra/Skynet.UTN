@@ -2,7 +2,7 @@
 {
     public enum CapacidadBateria
     {
-        CHICA=1000,
+        CHICA=4000,
         MEDIANA=6500,
         GRANDE= 12250
 

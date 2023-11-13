@@ -1,25 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logica.entidades
 {
-    internal class M8 : Operador
+    public class M8 : Operador
     {
-        public override double CargaMaxima => 250;
-        public M8()
+      
+
+        public M8(int fila, int columna, double cargaMaxima) : base("M8", fila, columna, cargaMaxima)
         {
             this.Bateria = new Bateria(CapacidadBateria.GRANDE);
         }
 
-        
-
-
         public override void Moverse(double distancia)
         {
-            throw new NotImplementedException();
+            // Implementa la lógica de movimiento para M8
         }
     }
 }

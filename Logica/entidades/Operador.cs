@@ -1,47 +1,233 @@
-﻿using System;
+﻿using Logica.entidades.Logica.entidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logica.entidades
+namespace Logica.entidades;
+
+public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITransferirCarga<Cuartel>
 {
-    public class Operador
-    {
-        public int Id {  get; set; }
-        public int Bateria { get; set; }
-        public string Estado {  get; set; }
-        public int CargaMaxima { get; }
-        public double VelocidadOptima { get;}
-        public string Posicion { get; set; }
+    private static int contadorId = 0;
+    public int Id { get; private set; }
+    public Bateria Bateria { get; set; }
+    public EstadoOperador Estado { get; set; }
+    public double VelocidadOptima { get; set; }
+    /*public int PosicionX { get; set; }
+    public int PosicionY { get; set; }*/
 
-        public Operador(int id, int bateria, string estado, int cargaMaxima, double velocidadOptima, string posicion)
+
+
+    public HashSet<Carga> Cargas { get; set; } = new HashSet<Carga>();
+
+    public Operador(string nombre, int fila, int columna, double cargaMaxima) : base(nombre, fila, columna)
     {
-        Id = id;
-        Bateria = bateria;
-        Estado = estado;
+
         CargaMaxima = cargaMaxima;
-        VelocidadOptima = velocidadOptima;
-        Posicion = posicion;
-    }
-    public void Mover(double distancia)
-    {
-        // Implementar la lógica para mover el operador y actualizar la batería y velocidad
+        Id = contadorId++;
     }
 
-    public void TransferirCargaBateria(Operador otroOperador)
+    public double CargaMaxima { get; private set; }
+    public abstract void Moverse(double distancia);
+
+
+    public string MostrarLocalizacion()
     {
-        // Implementar la transferencia de carga de batería entre operadores en la misma localización
+        string LocalizacionActual = "Fila " + Fila + " Columna " + Columna;
+        return LocalizacionActual;
     }
 
-    public void VolverAlCuartel()
+    public void TransferirBateria(Operador operador, int cantidadATransferir)
     {
-        // Implementar el retorno al cuartel y transferencia de carga física y recarga de batería
+        try
+        {
+            EstanEnLaMismaUbicacion(operador);
+            TieneCapacidadBateriaSufiente(cantidadATransferir);
+
+            int faltante = (operador.Bateria.CargaBateria - (int)operador.Bateria.Capacidad);
+            if (faltante > cantidadATransferir)
+            {
+                this.Bateria.GastarBateria(cantidadATransferir);
+                operador.Bateria.CargarBateria(cantidadATransferir);
+            }
+            else
+            {
+                operador.Bateria.CargarBateria(cantidadATransferir);
+                this.Bateria.GastarBateria(faltante);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 
-    public override string ToString()
+    private bool TieneCapacidadBateriaSufiente(double cantidad)
     {
-        return $"Operador ID: {Id}, Batería: {Bateria} mAh, Estado: {Estado}, Localización: {Posicion}";
+        return this.Bateria.CargaBateria > cantidad ? true : throw new Exception("No puede mandar tantos mAh");
     }
+
+    public void TransferirCarga(Operador destico, Carga carga)
+    {
+        try
+        {
+            ContieneCarga(carga);
+            EstanEnLaMismaUbicacion(destico);
+            SuperaPesoMaximo(carga);
+            this.sacarCarga(carga);
+            destico.AgregarCarga(carga);
+
+        }
+        catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+
+    }
+    public void TransferirCarga(Cuartel destino, Carga carga)
+    {
+        try
+        {
+            ContieneCarga(carga);
+            this.sacarCarga(carga);
+            destino.Cargas.Add(carga);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+
+    }
+
+    public void sacarCarga(Carga carga)
+    {
+        Cargas.Remove(carga);
+    }
+
+    public void AgregarCarga(Carga carga)
+    {
+        try
+        {
+            SuperaPesoMaximo(carga);
+            Cargas.Add(carga);
+        }catch (Exception ex)
+        {
+            throw new Exception("No se pudo agregar la carga debido al peso excedido.");
+        }
+    }
+    private double ObtenerPesoDeCargaActual()
+    {
+
+        return Cargas.Sum(carga => carga.Peso);
+    }
+
+    private bool SuperaPesoMaximo(Carga carga)
+    {
+        return ObtenerPesoDeCargaActual() + carga.Peso > CargaMaxima ? true : throw new Exception("Supera el peso maximo soportado");
+    }
+    /*
+    public bool EstanEnLaMismaUbicacion(ElementoMapa otroElemento)
+    {
+        return this.Fila == otroElemento.Fila && this.Columna == otroElemento.Columna;
+    }*/
+    private bool ContieneCarga(Carga carga)
+    {
+        return this.Cargas.Contains(carga) ? true : throw new Exception("No posee la carga que quiere transferir ");
+    }
+
+    public void TransferirTodaLaCargaAlCuartel(Cuartel cuartel)
+    {
+        try
+        {
+            EstanEnLaMismaUbicacion(cuartel);
+            foreach (var carga in Cargas)
+            {
+                cuartel.Cargas.Add(carga);
+            }
+            Cargas.Clear(); // Vaciar las cargas del operador después de la transferencia
+            Console.WriteLine("Se pudo transferir toda la carga");
+        }
+        catch (Exception ex) { Console.WriteLine(ex.Message); }
+    }
+
+    public void LlenarBateria()
+    {
+        this.Bateria.LlenarBateria();
+    }
+
+
+    public void MoverseYConsumirBateria( int fila, int columna)
+    {
+        try
+        {
+            Moverse(fila, columna);
+            Fila = fila;
+            Columna = columna;
+        }
+        catch (Exception ex) { Console.WriteLine(ex.Message); }
+    }
+
+    public bool BateriaDisponible()
+    {
+        return Bateria.CargaBateria > 0 ? true : throw new Exception("No posee bateria para moverse");
+    }
+
+    public bool BateriaGastadaPorDistancia(int distanciaARecorrer)
+    {
+        double tiempoEstimado = distanciaARecorrer / VelocidadOptima;
+        if ((tiempoEstimado * 1000) < Bateria.CargaBateria)
+        {
+            for (int i = 0; i < tiempoEstimado; i++)
+            {
+                Bateria.GastarBateria(1000);
+            }
+        }
+        return Bateria.CargaBateria > 0 ? true : throw new Exception("No hay bateria disponible para realizar el movimiento");
+    }
+    /*
+    public bool Moverse(int fila, int columna)
+    {
+        int distanciaARecorrer = Math.Abs(fila - PosicionX) + Math.Abs(columna - PosicionY);
+        BateriaDisponible();  no hace falat
+        BateriaGastadaPorDistancia(distanciaARecorrer);
+        return distanciaARecorrer > 0 ? true : throw new Exception("El operador ya se encuentra en la posicion indicada");
+    }
+    */
+
+    public void Moverse(int fila, int columna)
+    {
+        try
+        {
+            int distancia = calcularDistancia(fila, columna);
+            BateriaGastadaPorDistancia(distancia);
+            ActualizarPosicion(fila, columna);
+
+
+        }
+       catch(Exception ex) {
+
+            Console.WriteLine(ex.Message);
+        }
+
+
+    }
+
+    private void ActualizarPosicion(int fila, int columna)
+    {
+
+        throw new NotImplementedException();
+
+        Fila = fila;
+        Columna = columna;
+
+    }
+
+    private int calcularDistancia(int fila, int columna)
+    {
+
+
+      return Math.Abs(fila - Fila) + Math.Abs(columna - Columna);
+
     }
 }
+

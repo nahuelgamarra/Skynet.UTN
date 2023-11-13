@@ -2,8 +2,13 @@
 {
     public enum EstadoOperador
     {
-        BUENO,
-        REGULAR,
-        MALO
+        On,
+        Off,
+        StandBy,
+        Damaged,
+        Broken,
+        PassBatery,
+        Charging,
+        SpendLoad,
     }
 }
