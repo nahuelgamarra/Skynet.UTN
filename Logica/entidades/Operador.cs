@@ -224,10 +224,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
 
     private int calcularDistancia(int fila, int columna)
     {
-
-
       return Math.Abs(fila - Fila) + Math.Abs(columna - Columna);
-
     }
 }
 

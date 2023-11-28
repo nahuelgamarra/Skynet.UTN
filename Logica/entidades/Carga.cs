@@ -15,8 +15,5 @@ namespace Logica.entidades
         public Carga() { 
         Id= contadorId++;
         }
-
-
-        
     }
 }
