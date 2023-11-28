@@ -1,11 +1,8 @@
-﻿using System;
-
-namespace Logica.entidades
+﻿namespace Logica.entidades
 {
     public class Mapa
     {
         private List<ElementoMapa>[,] elementosMapa;
-
         public Mapa(int filas, int columnas)
         {
             elementosMapa = new List<ElementoMapa>[filas, columnas];
@@ -54,7 +51,6 @@ namespace Logica.entidades
         {
             elementosMapa[elemento.Fila, elemento.Columna].Remove(elemento);
             elementosMapa[nuevaFila, nuevaColumna].Add(elemento);
-
             elemento.Fila = nuevaFila;
             elemento.Columna = nuevaColumna;
         }

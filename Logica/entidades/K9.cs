@@ -21,5 +21,10 @@ public class K9 : Operador
     {
         // Implementar lógica de movimiento para K9
     }
+
+    public override bool PuedeNadar()
+    {
+        return false;
+    }
 }
 

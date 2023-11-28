@@ -1,36 +1,28 @@
-﻿using Logica.entidades.Logica.entidades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Logica.entidades.Interfaces;
+using Logica.entidades.Logica.entidades;
 
 namespace Logica.entidades;
 
-public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITransferirCarga<Cuartel>
+public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, 
+    ITransferirCarga<Cuartel>, IPuedeNadar
+
 {
     private static int contadorId = 0;
     public int Id { get; private set; }
     public Bateria Bateria { get; set; }
     public EstadoOperador Estado { get; set; }
     public double VelocidadOptima { get; set; }
-    /*public int PosicionX { get; set; }
-    public int PosicionY { get; set; }*/
-
-
 
     public HashSet<Carga> Cargas { get; set; } = new HashSet<Carga>();
 
     public Operador(string nombre, int fila, int columna, double cargaMaxima) : base(nombre, fila, columna)
     {
-
         CargaMaxima = cargaMaxima;
         Id = contadorId++;
     }
 
     public double CargaMaxima { get; private set; }
     public abstract void Moverse(double distancia);
-
 
     public string MostrarLocalizacion()
     {
@@ -75,31 +67,27 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
             ContieneCarga(carga);
             EstanEnLaMismaUbicacion(destico);
             SuperaPesoMaximo(carga);
-            this.sacarCarga(carga);
+            this.SacarCarga(carga);
             destico.AgregarCarga(carga);
 
         }
         catch (Exception ex) { Console.WriteLine(ex.Message); }
-
-
     }
     public void TransferirCarga(Cuartel destino, Carga carga)
     {
         try
         {
             ContieneCarga(carga);
-            this.sacarCarga(carga);
+            this.SacarCarga(carga);
             destino.Cargas.Add(carga);
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
         }
-
-
     }
 
-    public void sacarCarga(Carga carga)
+    public void SacarCarga(Carga carga)
     {
         Cargas.Remove(carga);
     }
@@ -110,14 +98,14 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
         {
             SuperaPesoMaximo(carga);
             Cargas.Add(carga);
-        }catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             throw new Exception("No se pudo agregar la carga debido al peso excedido.");
         }
     }
     private double ObtenerPesoDeCargaActual()
     {
-
         return Cargas.Sum(carga => carga.Peso);
     }
 
@@ -125,11 +113,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
     {
         return ObtenerPesoDeCargaActual() + carga.Peso > CargaMaxima ? true : throw new Exception("Supera el peso maximo soportado");
     }
-    /*
-    public bool EstanEnLaMismaUbicacion(ElementoMapa otroElemento)
-    {
-        return this.Fila == otroElemento.Fila && this.Columna == otroElemento.Columna;
-    }*/
+
     private bool ContieneCarga(Carga carga)
     {
         return this.Cargas.Contains(carga) ? true : throw new Exception("No posee la carga que quiere transferir ");
@@ -156,7 +140,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
     }
 
 
-    public void MoverseYConsumirBateria( int fila, int columna)
+    public void MoverseYConsumirBateria(int fila, int columna)
     {
         try
         {
@@ -184,15 +168,6 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
         }
         return Bateria.CargaBateria > 0 ? true : throw new Exception("No hay bateria disponible para realizar el movimiento");
     }
-    /*
-    public bool Moverse(int fila, int columna)
-    {
-        int distanciaARecorrer = Math.Abs(fila - PosicionX) + Math.Abs(columna - PosicionY);
-        BateriaDisponible();  no hace falat
-        BateriaGastadaPorDistancia(distanciaARecorrer);
-        return distanciaARecorrer > 0 ? true : throw new Exception("El operador ya se encuentra en la posicion indicada");
-    }
-    */
 
     public void Moverse(int fila, int columna)
     {
@@ -201,30 +176,31 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, ITran
             int distancia = calcularDistancia(fila, columna);
             BateriaGastadaPorDistancia(distancia);
             ActualizarPosicion(fila, columna);
-
-
         }
-       catch(Exception ex) {
-
+        catch (Exception ex)
+        {
             Console.WriteLine(ex.Message);
         }
-
-
     }
 
     private void ActualizarPosicion(int fila, int columna)
     {
-
-        throw new NotImplementedException();
-
+       
         Fila = fila;
         Columna = columna;
-
     }
 
     private int calcularDistancia(int fila, int columna)
     {
-      return Math.Abs(fila - Fila) + Math.Abs(columna - Columna);
+        return Math.Abs(fila - Fila) + Math.Abs(columna - Columna);
     }
+
+    internal void SufrirDanio()
+    {
+        throw new NotImplementedException();
+    }
+
+    public abstract bool PuedeNadar();
+   
 }
 

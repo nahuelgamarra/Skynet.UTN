@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logica.entidades
+namespace Logica.entidades.Interfaces
 {
     public interface ITransferirCarga<T>
     {
-        void  TransferirCarga(T operadorDestino, Carga carga);
-        
+        void TransferirCarga(T operadorDestino, Carga carga);
+
     }
 }

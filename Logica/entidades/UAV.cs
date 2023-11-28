@@ -15,5 +15,9 @@ namespace Logica.entidades
         {
             // Implementa la lógica de movimiento para UAV
         }
+        public override bool PuedeNadar()
+        {
+            return true;
+        }
     }
 }

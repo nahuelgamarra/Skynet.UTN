@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Logica.entidades
+﻿namespace Logica.entidades
 {
-   
+    using global::Logica.entidades.Interfaces;
     using System;
     using System.Collections.Generic;
 
@@ -18,8 +12,6 @@ namespace Logica.entidades
 
             public HashSet<Operador> ListaOperadores = new HashSet<Operador>();
             public int Id { get; private set; }
-
-            //      public List<Carga> cargasEnCuartel { get; private set; } = new List<Carga>();
             public HashSet<Carga> Cargas { get; private set; } = new HashSet<Carga>();
 
             public Cuartel(int fila, int columna) : base("Cuartel", fila, columna)
@@ -50,11 +42,11 @@ namespace Logica.entidades
                     ContieneCarga(carga);
                     operadorDestino.AgregarCarga(carga);
                     SacarCarga(carga);
-                }catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
-             
             }
 
             private void SacarCarga(Carga carga)
@@ -65,14 +57,21 @@ namespace Logica.entidades
             {
                 return this.Cargas.Contains(carga) ? true : throw new Exception("No posee la carga que quiere transferir ");
             }
-           public void ListarEstadoDeOperadores()
+            public void ListarEstadoDeOperadores()
             {
-                foreach(var operador in  ListaOperadores)
+                foreach (var operador in ListaOperadores)
                 {
                     Console.WriteLine($"Operador id: {operador.Id}, estado {operador.Estado}");
-
                 }
             }
+
+            public void RepararOperador(Operador operador) { }
+
+            public void RecargarBateria(Operador operador)
+            {
+                operador.Bateria.LlenarBateria();
+            }
+
             public void ListarEstadoDeOperadoresEnLocalizacion(ElementoMapa elemento)
             {
                 Console.WriteLine($"LocalDataStoreSlot que esten en esta ubicacion Fila{elemento.Fila}, columna{elemento.Columna} ");
@@ -80,16 +79,10 @@ namespace Logica.entidades
                 {
                     if (operador.MismaUbicacion(elemento))
                     {
-                      
                         Console.WriteLine($"Operador id: {operador.Id}, estado {operador.Estado}");
                     }
-                  
-
                 }
             }
-
-            
-          
         }
     }
 }

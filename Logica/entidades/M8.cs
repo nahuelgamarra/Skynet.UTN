@@ -15,5 +15,9 @@ namespace Logica.entidades
         {
             // Implementa la lógica de movimiento para M8
         }
+        public override bool PuedeNadar()
+        {
+            return false;
+        }
     }
 }
