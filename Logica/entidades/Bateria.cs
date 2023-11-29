@@ -7,13 +7,13 @@ namespace Logica.entidades
 
         public CapacidadBateria Capacidad { get; set; }
 
-        public int CargaBateria { get; set; }
+        public double CargaBateria { get; set; }
 
 
         public Bateria(CapacidadBateria capacidad)
         {
             this.Capacidad = capacidad;
-            this.CargaBateria = (int)capacidad;
+            this.CargaBateria = (double)Capacidad;
         }
 
         public void CargarBateria(int cargaBateria)
@@ -21,9 +21,14 @@ namespace Logica.entidades
             this.CargaBateria += cargaBateria;
         }
 
-        public void GastarBateria(int gastarBateria)
+        public void GastarBateria(double gastarBateria)
         {
-            this.CargaBateria -= gastarBateria;
+            double bateriaLuegoDeGastar = this.CargaBateria - gastarBateria;
+           if(bateriaLuegoDeGastar < 0)
+            {
+                throw new Exception("Se quedo sin bateria");
+            }
+            this.CargaBateria = bateriaLuegoDeGastar;
         }
         public void LlenarBateria()
         {

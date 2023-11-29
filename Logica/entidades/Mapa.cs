@@ -74,7 +74,6 @@ namespace Logica.entidades
             {
                 for (int j = 0; j < columnas; j++)
                 {
-                    // Determinar aleatoriamente qué tipo de localización agregar
                     int tipoLocalizacion = random.Next(6); // Se elige entre 0 y 5
 
                     switch (tipoLocalizacion)
@@ -110,5 +109,5 @@ namespace Logica.entidades
             }
         }
 
-     }
- } 
+    }
+}

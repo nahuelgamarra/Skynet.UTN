@@ -13,6 +13,7 @@ namespace Logica.entidades.Localizacion
 
         protected Localizacion(string nombre, int fila, int columna) : base(nombre, fila, columna)
         {
+            
         }
 
         public int Id { get; private set; }

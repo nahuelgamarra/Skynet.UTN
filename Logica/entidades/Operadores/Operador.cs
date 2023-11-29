@@ -37,7 +37,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
             EstanEnLaMismaUbicacion(operador);
             TieneCapacidadBateriaSufiente(cantidadATransferir);
 
-            int faltante = operador.Bateria.CargaBateria - (int)operador.Bateria.Capacidad;
+            double faltante = operador.Bateria.CargaBateria - (double)operador.Bateria.Capacidad;
             if (faltante > cantidadATransferir)
             {
                 Bateria.GastarBateria(cantidadATransferir);
@@ -128,7 +128,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
             {
                 cuartel.Cargas.Add(carga);
             }
-            Cargas.Clear(); // Vaciar las cargas del operador después de la transferencia
+            Cargas.Clear();
             Console.WriteLine("Se pudo transferir toda la carga");
         }
         catch (Exception ex) { Console.WriteLine(ex.Message); }
@@ -145,8 +145,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
         try
         {
             Moverse(fila, columna);
-            Fila = fila;
-            Columna = columna;
+
         }
         catch (Exception ex) { Console.WriteLine(ex.Message); }
     }
@@ -156,43 +155,69 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
         return Bateria.CargaBateria > 0 ? true : throw new Exception("No posee bateria para moverse");
     }
 
-    public bool BateriaGastadaPorDistancia(int distanciaARecorrer)
+    public void BateriaGastadaPorDistancia(int distanciaARecorrer)
     {
         double tiempoEstimado = distanciaARecorrer / VelocidadOptima;
+
         if (tiempoEstimado * 1000 < Bateria.CargaBateria)
         {
-            for (int i = 0; i < tiempoEstimado; i++)
+            int tiempoEstimadoEnSegundos = (int)Math.Ceiling(tiempoEstimado);
+            double bateriaGastadaPorSegundo = Bateria.CargaBateria / (tiempoEstimadoEnSegundos * 1000);
+
+            while (tiempoEstimadoEnSegundos > 0)
             {
-                Bateria.GastarBateria(1000);
+                Bateria.GastarBateria(bateriaGastadaPorSegundo);
+                tiempoEstimadoEnSegundos--;
             }
         }
-        return Bateria.CargaBateria > 0 ? true : throw new Exception("No hay bateria disponible para realizar el movimiento");
+        else
+        {
+            throw new Exception("No hay batería disponible para realizar el movimiento");
+        }
     }
 
-    public void Moverse(int fila, int columna)
+
+    private void Moverse(int fila, int columna)
     {
-        try
+        int distanciaFilas = fila - Fila;
+        int distanciaColumnas = columna - Columna;
+
+        MoversePorFila(distanciaFilas);
+
+        MoversePorColumna(distanciaColumnas);
+    }
+
+    private void MoversePorColumna(int distanciaColumnas)
+    {
+        for (int pasoColumna = 0; pasoColumna < Math.Abs(distanciaColumnas); pasoColumna++)
         {
-            int distancia = calcularDistancia(fila, columna);
-            BateriaGastadaPorDistancia(distancia);
-            ActualizarPosicion(fila, columna);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
+            int nuevaColumna = Columna + (pasoColumna + 1) * Math.Sign(distanciaColumnas);
+            BateriaGastadaPorDistancia(1);
+            ActualizarPosicion(Fila, nuevaColumna);
         }
     }
+
+
+    private void MoversePorFila(int distanciaFilas)
+    {
+
+        for (int pasoFila = 0; pasoFila < Math.Abs(distanciaFilas); pasoFila++)
+        {
+            int nuevaFila = Fila + (pasoFila + 1) * Math.Sign(distanciaFilas);
+            BateriaGastadaPorDistancia(1);
+            Console.WriteLine("Cuantas veces entre " + nuevaFila);
+            ActualizarPosicion(nuevaFila, Columna);
+        }
+
+    }
+
+
 
     private void ActualizarPosicion(int fila, int columna)
     {
 
-        Fila = fila;
+        this.Fila = fila;
         Columna = columna;
-    }
-
-    private int calcularDistancia(int fila, int columna)
-    {
-        return Math.Abs(fila - Fila) + Math.Abs(columna - Columna);
     }
 
     internal void SufrirDanio()
