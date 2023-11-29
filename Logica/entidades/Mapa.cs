@@ -1,4 +1,7 @@
-﻿namespace Logica.entidades
+﻿using Logica.entidades.Localizacion;
+using Logica.entidades.Logica.entidades;
+
+namespace Logica.entidades
 {
     public class Mapa
     {
@@ -13,6 +16,7 @@
                     elementosMapa[i, j] = new List<ElementoMapa>();
                 }
             }
+            GenerarLocalidadesAleatorias();
         }
 
         public void MostrarMapa()
@@ -54,5 +58,57 @@
             elemento.Fila = nuevaFila;
             elemento.Columna = nuevaColumna;
         }
-    }
-}
+        public void GenerarLocalidadesAleatorias()
+        {
+            Random random = new Random();
+
+            // Definir la cantidad máxima de cuarteles permitidos
+            int maxCuartel = 3;
+            int cuartelCount = 0;
+
+            // Definir la cantidad de filas y columnas del mapa
+            int filas = elementosMapa.GetLength(0);
+            int columnas = elementosMapa.GetLength(1);
+
+            for (int i = 0; i < filas; i++)
+            {
+                for (int j = 0; j < columnas; j++)
+                {
+                    // Determinar aleatoriamente qué tipo de localización agregar
+                    int tipoLocalizacion = random.Next(6); // Se elige entre 0 y 5
+
+                    switch (tipoLocalizacion)
+                    {
+                        case 0:
+                            AgregarElemento(new Lago($"Lago_{i}_{j}", i, j), i, j);
+                            break;
+                        case 1:
+                            AgregarElemento(new LugarDeReciclaje($"Reciclaje_{i}_{j}", i, j), i, j);
+                            break;
+                        case 2:
+                            AgregarElemento(new TerrenoBaldio($"Terreno_{i}_{j}", i, j), i, j);
+                            break;
+                        case 3:
+                            if (cuartelCount < maxCuartel)
+                            {
+                                AgregarElemento(new Cuartel(i, j), i, j);
+                                cuartelCount++;
+                            }
+                            else
+                            {
+                                AgregarElemento(new TerrenoBaldio($"Terreno_{i}_{j}", i, j), i, j);
+                            }
+                            break;
+                        case 4:
+                            AgregarElemento(new Vertedero($"Vertedero_{i}_{j}", i, j), i, j);
+                            break;
+                        case 5:
+                            AgregarElemento(new VertederoElectronico($"VertederoElectronico_{i}_{j}", i, j), i, j);
+                            break;
+                    }
+                }
+            }
+        }
+
+     }
+ } 

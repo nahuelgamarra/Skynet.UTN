@@ -1,4 +1,4 @@
-﻿namespace Logica.entidades
+﻿namespace Logica.entidades.Operadores
 {
     public enum EstadoOperador
     {

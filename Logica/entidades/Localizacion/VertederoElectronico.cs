@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logica.entidades.Operadores;
 
 namespace Logica.entidades.Localizacion
 {
@@ -23,4 +24,6 @@ namespace Logica.entidades.Localizacion
             bateria.SufrirDanio(Reduccion);
         }
     }
+
+
 }

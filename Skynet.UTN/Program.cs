@@ -1,5 +1,7 @@
 ﻿using Logica.entidades;  // Asegúrate de incluir esta línea
 using Logica.entidades.Logica.entidades;
+using Logica.entidades.Operadores;
+
 
 namespace Skynet.UTN
 {
@@ -76,7 +78,7 @@ namespace Skynet.UTN
            
             cuartel.MostrarElementosEnCuartel();
 
-
+            mapa.MostrarMapa();
         }
     }
 }

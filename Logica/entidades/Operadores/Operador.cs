@@ -1,9 +1,9 @@
 ﻿using Logica.entidades.Interfaces;
 using Logica.entidades.Logica.entidades;
 
-namespace Logica.entidades;
+namespace Logica.entidades.Operadores;
 
-public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>, 
+public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
     ITransferirCarga<Cuartel>, IPuedeNadar
 
 {
@@ -37,16 +37,16 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
             EstanEnLaMismaUbicacion(operador);
             TieneCapacidadBateriaSufiente(cantidadATransferir);
 
-            int faltante = (operador.Bateria.CargaBateria - (int)operador.Bateria.Capacidad);
+            int faltante = operador.Bateria.CargaBateria - (int)operador.Bateria.Capacidad;
             if (faltante > cantidadATransferir)
             {
-                this.Bateria.GastarBateria(cantidadATransferir);
+                Bateria.GastarBateria(cantidadATransferir);
                 operador.Bateria.CargarBateria(cantidadATransferir);
             }
             else
             {
                 operador.Bateria.CargarBateria(cantidadATransferir);
-                this.Bateria.GastarBateria(faltante);
+                Bateria.GastarBateria(faltante);
             }
         }
         catch (Exception ex)
@@ -57,7 +57,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
 
     private bool TieneCapacidadBateriaSufiente(double cantidad)
     {
-        return this.Bateria.CargaBateria > cantidad ? true : throw new Exception("No puede mandar tantos mAh");
+        return Bateria.CargaBateria > cantidad ? true : throw new Exception("No puede mandar tantos mAh");
     }
 
     public void TransferirCarga(Operador destico, Carga carga)
@@ -67,7 +67,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
             ContieneCarga(carga);
             EstanEnLaMismaUbicacion(destico);
             SuperaPesoMaximo(carga);
-            this.SacarCarga(carga);
+            SacarCarga(carga);
             destico.AgregarCarga(carga);
 
         }
@@ -78,7 +78,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
         try
         {
             ContieneCarga(carga);
-            this.SacarCarga(carga);
+            SacarCarga(carga);
             destino.Cargas.Add(carga);
         }
         catch (Exception ex)
@@ -116,7 +116,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
 
     private bool ContieneCarga(Carga carga)
     {
-        return this.Cargas.Contains(carga) ? true : throw new Exception("No posee la carga que quiere transferir ");
+        return Cargas.Contains(carga) ? true : throw new Exception("No posee la carga que quiere transferir ");
     }
 
     public void TransferirTodaLaCargaAlCuartel(Cuartel cuartel)
@@ -136,7 +136,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
 
     public void LlenarBateria()
     {
-        this.Bateria.LlenarBateria();
+        Bateria.LlenarBateria();
     }
 
 
@@ -159,7 +159,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
     public bool BateriaGastadaPorDistancia(int distanciaARecorrer)
     {
         double tiempoEstimado = distanciaARecorrer / VelocidadOptima;
-        if ((tiempoEstimado * 1000) < Bateria.CargaBateria)
+        if (tiempoEstimado * 1000 < Bateria.CargaBateria)
         {
             for (int i = 0; i < tiempoEstimado; i++)
             {
@@ -185,7 +185,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
 
     private void ActualizarPosicion(int fila, int columna)
     {
-       
+
         Fila = fila;
         Columna = columna;
     }
@@ -201,6 +201,6 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
     }
 
     public abstract bool PuedeNadar();
-   
+
 }
 
