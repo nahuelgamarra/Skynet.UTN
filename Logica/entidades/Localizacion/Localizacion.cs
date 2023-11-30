@@ -10,10 +10,11 @@ namespace Logica.entidades.Localizacion
     public abstract class Localizacion : ElementoMapa
     {
         private static int contadorId = 0;
+        public int ID { get; private set; }
 
         protected Localizacion(string nombre, int fila, int columna, Mapa mapa) : base(nombre, fila, columna, mapa)
         {
-            
+            this.ID = contadorId++;
         }
 
         public int Id { get; private set; }

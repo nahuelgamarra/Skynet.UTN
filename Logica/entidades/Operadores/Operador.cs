@@ -106,14 +106,14 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
             throw new Exception("No se pudo agregar la carga debido al peso excedido.");
         }
     }
-    private double ObtenerPesoDeCargaActual()
+    public double ObtenerPesoDeCargaActual()
     {
         return Cargas.Sum(carga => carga.Peso);
     }
 
-    private bool SuperaPesoMaximo(Carga carga)
+    private void SuperaPesoMaximo(Carga carga)
     {
-        return ObtenerPesoDeCargaActual() + carga.Peso > CargaMaxima ? true : throw new Exception("Supera el peso maximo soportado");
+        if(ObtenerPesoDeCargaActual() + carga.Peso > CargaMaxima) throw new Exception("Supera el peso maximo soportado");
     }
 
     private bool ContieneCarga(Carga carga)
@@ -194,7 +194,6 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
     {
         for (int pasoColumna = 0; pasoColumna < Math.Abs(distanciaColumnas); pasoColumna++)
         {
-            SufrirDanio();
             int nuevaColumna = Columna + Math.Sign(distanciaColumnas);
             BateriaGastadaPorDistancia(1);
             ActualizarPosicion(Fila, nuevaColumna);
@@ -205,7 +204,6 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
     {
         for (int pasoFila = 0; pasoFila < Math.Abs(distanciaFilas); pasoFila++)
         {
-            SufrirDanio();
             int nuevaFila = Fila + Math.Sign(distanciaFilas);
             BateriaGastadaPorDistancia(1);
             ActualizarPosicion(nuevaFila, Columna);

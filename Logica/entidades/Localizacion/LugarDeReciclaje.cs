@@ -10,17 +10,24 @@ namespace Logica.entidades.Localizacion
 
     public class LugarDeReciclaje : Localizacion
     {
+        private HashSet<Carga> cargasParaReciclar;
         public LugarDeReciclaje(string nombre, int fila, int columna, Mapa mapa) : base(nombre, fila, columna, mapa)
         {
+            this.cargasParaReciclar = new HashSet<Carga>();
         }
 
         public override void AplicarEfecto(Operador operador)
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Pasaste por un lugar de reciclaje {operador.ObtenerPesoDeCargaActual()}");
+            DejarCargaParaReciclar(operador);
+            Console.WriteLine($"te llevas esta carga {operador.ObtenerPesoDeCargaActual()}");
         }
-        public void RecargarOperador(Operador operrador)
-        {
-            
+       private void DejarCargaParaReciclar(Operador operador) {
+            if (operador.Cargas.Any())
+            {
+                cargasParaReciclar.UnionWith(operador.Cargas);
+                operador.Cargas.Clear();
+            }
         }
     }
 }

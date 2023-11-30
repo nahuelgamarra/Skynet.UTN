@@ -17,8 +17,9 @@ namespace Logica.entidades.Localizacion
         {
             if (!operador.PuedeNadar())
             {
-                throw new Exception($"{operador.Nombre} No sabe puede pasar por un lago");
+                throw new Exception($"{operador.Nombre} No sabe puede pasar por un lago, usted se quedo en {operador.MostrarLocalizacion()}");
             }
+            Console.WriteLine("Pase por el lago");
         }
     }
 }

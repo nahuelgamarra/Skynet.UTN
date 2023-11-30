@@ -11,9 +11,16 @@ namespace Logica.entidades
         private static int contadorId = 0;
         public int Id { get; private set; }
         public string Descripcion { get; set; }
-        public double Peso { get; set; } = 0;
+        public double Peso { get; set; }
         public Carga() { 
         Id= contadorId++;
+            GenerarPesoRandomDeLaCarga();
+        }
+        private void GenerarPesoRandomDeLaCarga()
+        {
+            Random random = new Random();
+            // Generar un número aleatorio entre 5 y 150
+          this.Peso = random.Next(5, 10);
         }
     }
 }

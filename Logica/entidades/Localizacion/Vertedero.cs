@@ -9,15 +9,39 @@ namespace Logica.entidades.Localizacion
 {
     public class Vertedero : Localizacion
     {
+        private HashSet<Carga> cargas;
         public Vertedero(string nombre, int fila, int columna, Mapa mapa) : base(nombre, fila, columna, mapa)
         {
+            this.PosibilidadDeDanio = 5;
+            this.cargas = new HashSet<Carga>();
+            CargarVertedero();
         }
 
-        public int PosibilidadDeDanio {  get;private set; }
+        public int PosibilidadDeDanio { get; private set; }
 
         public override void AplicarEfecto(Operador operador)
         {
-            RandomizarDanio(operador);
+            try
+            {
+                RandomizarDanio(operador);
+                LlenarOperadorDeCargas(operador);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(cargas.Count() + "  Luego de cargarlo");
+            }
+
+        }
+
+        private void LlenarOperadorDeCargas(Operador operador)
+        {
+            Console.WriteLine(cargas.Count()+ "  Antes de cargar operador");
+            foreach (var carga in cargas)
+            {
+                operador.AgregarCarga(carga);
+                cargas.Remove(carga);
+            }
+           
         }
         private void RandomizarDanio(Operador operador)
         {
@@ -26,7 +50,14 @@ namespace Logica.entidades.Localizacion
             if (posibleDanio < PosibilidadDeDanio)
             {
                 operador.SufrirDanio();
-                
+            }
+        }
+
+        private void CargarVertedero()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                cargas.Add(new Carga());
             }
         }
     }
