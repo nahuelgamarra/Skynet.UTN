@@ -26,5 +26,9 @@ namespace Logica.entidades
         {
             return this.Fila == otroElemento.Fila && this.Columna == otroElemento.Columna;
         }
+        public List<Localizacion.Localizacion> ListarLocalidades()
+        {
+            return new List<Localizacion.Localizacion>();
+        }
     }
 }

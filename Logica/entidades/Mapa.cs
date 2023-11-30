@@ -58,6 +58,10 @@ namespace Logica.entidades
             elemento.Fila = nuevaFila;
             elemento.Columna = nuevaColumna;
         }
+        public List<ElementoMapa> ElementosEnPosicion(int fila, int columna)
+        {
+            return elementosMapa[fila, columna];
+        }
         public void GenerarLocalidadesAleatorias()
         {
             Random random = new Random();
@@ -110,4 +114,5 @@ namespace Logica.entidades
         }
 
     }
+
 }

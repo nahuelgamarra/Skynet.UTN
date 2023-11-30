@@ -1,6 +1,7 @@
 ﻿using Logica.entidades.Interfaces;
 using Logica.entidades.Logica.entidades;
 
+
 namespace Logica.entidades.Operadores;
 
 public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
@@ -144,15 +145,16 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
     {
         try
         {
-            Moverse(fila, columna);
+            int distanciaFilas = fila - Fila;
+            int distanciaColumnas = columna - Columna;
 
+            MoversePorFila(distanciaFilas);
+            MoversePorColumna(distanciaColumnas);
         }
-        catch (Exception ex) { Console.WriteLine(ex.Message); }
-    }
-
-    public bool BateriaDisponible()
-    {
-        return Bateria.CargaBateria > 0 ? true : throw new Exception("No posee bateria para moverse");
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     public void BateriaGastadaPorDistancia(int distanciaARecorrer)
@@ -176,53 +178,52 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
         }
     }
 
+    /*
+        private void Moverse(int fila, int columna)
+        {
+            int distanciaFilas = fila - Fila;
+            int distanciaColumnas = columna - Columna;
 
-    private void Moverse(int fila, int columna)
-    {
-        int distanciaFilas = fila - Fila;
-        int distanciaColumnas = columna - Columna;
+            MoversePorFila(distanciaFilas);
 
-        MoversePorFila(distanciaFilas);
-
-        MoversePorColumna(distanciaColumnas);
-    }
-
+            MoversePorColumna(distanciaColumnas);
+        }
+    */
     private void MoversePorColumna(int distanciaColumnas)
     {
         for (int pasoColumna = 0; pasoColumna < Math.Abs(distanciaColumnas); pasoColumna++)
         {
-            int nuevaColumna = Columna + (pasoColumna + 1) * Math.Sign(distanciaColumnas);
+            SufrirDanio();
+            int nuevaColumna = Columna + Math.Sign(distanciaColumnas);
             BateriaGastadaPorDistancia(1);
             ActualizarPosicion(Fila, nuevaColumna);
         }
     }
 
-
     private void MoversePorFila(int distanciaFilas)
     {
-
         for (int pasoFila = 0; pasoFila < Math.Abs(distanciaFilas); pasoFila++)
         {
-            int nuevaFila = Fila + (pasoFila + 1) * Math.Sign(distanciaFilas);
+            SufrirDanio();
+            int nuevaFila = Fila + Math.Sign(distanciaFilas);
             BateriaGastadaPorDistancia(1);
-            Console.WriteLine("Cuantas veces entre " + nuevaFila);
             ActualizarPosicion(nuevaFila, Columna);
         }
-
     }
-
 
 
     private void ActualizarPosicion(int fila, int columna)
     {
+       
 
         this.Fila = fila;
-        Columna = columna;
+        this.Columna = columna;
     }
 
     internal void SufrirDanio()
     {
-        throw new NotImplementedException();
+        Console.WriteLine("Estoy sufriendo algu  daño");
+
     }
 
     public abstract bool PuedeNadar();

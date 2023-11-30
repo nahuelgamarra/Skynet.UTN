@@ -14,11 +14,11 @@ namespace Skynet.UTN
             // Crear un operador específico, por ejemplo, K9
             Cuartel cuartel = new Cuartel(1, 2);
            
-            Operador operador8 = new K9(9, 9,5);
+            Operador operador = new K9(0, 0,5);
             Operador operador2 = new K9(3, 1,20);
             Operador operador3 = new UAV(3, 1,8);
             Operador operador4 = new UAV(8, 1,7);
-           // cuartel.AgregarElemento(operador);
+            cuartel.AgregarElemento(operador);
             cuartel.AgregarElemento(operador2);
             cuartel.AgregarElemento(operador3);
 
@@ -28,7 +28,7 @@ namespace Skynet.UTN
             
 
 
-            mapa.AgregarElemento(operador8, operador8.Fila, operador8.Columna);
+            mapa.AgregarElemento(operador, operador.Fila, operador.Columna);
             mapa.AgregarElemento(operador2, operador2.Fila, operador2.Columna);
             mapa.AgregarElemento(operador3, operador3.Fila, operador3.Columna);
             mapa.AgregarElemento(cuartel, cuartel.Fila, cuartel.Columna);
@@ -71,16 +71,16 @@ namespace Skynet.UTN
             Console.WriteLine("Elementos del cuartel: ");
             cuartel.MostrarElementosEnCuartel();
             Console.WriteLine("Mover elementos:");
-            operador8.VelocidadOptima = 10;
+            operador2.VelocidadOptima = 10;
          
             cuartel.MostrarElementosEnCuartel();
            
             cuartel.MostrarElementosEnCuartel();
-           Console.WriteLine(operador8.MostrarLocalizacion() + " Aca esta el operador Antes de moverse");
-            Console.WriteLine(operador8.Bateria.CargaBateria + " Y tiene esta bateria");
-            operador8.MoverseYConsumirBateria(8, 5);
-            Console.WriteLine(operador8.MostrarLocalizacion()+ "Aca esta el operador luego de moverse");
-            Console.WriteLine(operador8.Bateria.CargaBateria + " Y tiene esta bateria");
+            Console.WriteLine(operador.MostrarLocalizacion() + " Aca esta el operador Antes de moverse");
+            Console.WriteLine(operador.Bateria.Capacidad + " Y tiene esta bateria");
+            
+            Console.WriteLine(operador.MostrarLocalizacion()+ "Aca esta el operador luego de moverse");
+          
            
         }
     }

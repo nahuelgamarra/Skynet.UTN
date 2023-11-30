@@ -26,6 +26,7 @@ namespace Logica.entidades.Localizacion
             if (posibleDanio < PosibilidadDeDanio)
             {
                 operador.SufrirDanio();
+                
             }
         }
     }
