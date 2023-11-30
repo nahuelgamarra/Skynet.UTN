@@ -9,7 +9,7 @@ namespace Logica.entidades.Localizacion
 {
     public class Vertedero : Localizacion
     {
-        public Vertedero(string nombre, int fila, int columna) : base(nombre, fila, columna)
+        public Vertedero(string nombre, int fila, int columna, Mapa mapa) : base(nombre, fila, columna, mapa)
         {
         }
 

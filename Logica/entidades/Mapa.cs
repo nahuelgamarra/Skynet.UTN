@@ -5,8 +5,11 @@ namespace Logica.entidades
 {
     public class Mapa
     {
+
+        private static Mapa instancia;
         private List<ElementoMapa>[,] elementosMapa;
-        public Mapa(int filas, int columnas)
+
+        private Mapa(int filas, int columnas)
         {
             elementosMapa = new List<ElementoMapa>[filas, columnas];
             for (int i = 0; i < filas; i++)
@@ -17,6 +20,25 @@ namespace Logica.entidades
                 }
             }
             GenerarLocalidadesAleatorias();
+        }
+
+        public static Mapa ObtenerInstancia(int filas, int columnas)
+        {
+            if (instancia == null)
+            {
+                instancia = new Mapa(filas, columnas);
+            }
+            return instancia;
+        }
+
+        public static Mapa ObtenerInstanciaExistente()
+        {
+            if (instancia == null)
+            {
+                
+                 throw new InvalidOperationException("La instancia del mapa no ha sido creada.");
+            }
+            return instancia;
         }
 
         public void MostrarMapa()
@@ -83,30 +105,30 @@ namespace Logica.entidades
                     switch (tipoLocalizacion)
                     {
                         case 0:
-                            AgregarElemento(new Lago($"Lago_{i}_{j}", i, j), i, j);
+                            new Lago($"Lago_{i}_{j}", i, j, this);
                             break;
                         case 1:
-                            AgregarElemento(new LugarDeReciclaje($"Reciclaje_{i}_{j}", i, j), i, j);
+                            new LugarDeReciclaje($"Reciclaje_{i}_{j}", i, j, this);
                             break;
                         case 2:
-                            AgregarElemento(new TerrenoBaldio($"Terreno_{i}_{j}", i, j), i, j);
+                            new TerrenoBaldio($"Terreno_{i}_{j}", i, j, this);
                             break;
                         case 3:
                             if (cuartelCount < maxCuartel)
                             {
-                                AgregarElemento(new Cuartel(i, j), i, j);
+                                new Cuartel(i, j, this);
                                 cuartelCount++;
                             }
                             else
                             {
-                                AgregarElemento(new TerrenoBaldio($"Terreno_{i}_{j}", i, j), i, j);
+                                new TerrenoBaldio($"Terreno_{i}_{j}", i, j, this);
                             }
                             break;
                         case 4:
-                            AgregarElemento(new Vertedero($"Vertedero_{i}_{j}", i, j), i, j);
+                            new Vertedero($"Vertedero_{i}_{j}", i, j, this);
                             break;
                         case 5:
-                            AgregarElemento(new VertederoElectronico($"VertederoElectronico_{i}_{j}", i, j), i, j);
+                            new VertederoElectronico($"VertederoElectronico_{i}_{j}", i, j, this);
                             break;
                     }
                 }

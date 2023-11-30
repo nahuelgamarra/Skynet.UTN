@@ -16,7 +16,8 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
 
     public HashSet<Carga> Cargas { get; set; } = new HashSet<Carga>();
 
-    public Operador(string nombre, int fila, int columna, double cargaMaxima) : base(nombre, fila, columna)
+    public Operador(string nombre, int fila, int columna, double cargaMaxima, Mapa mapa = null)
+         : base(nombre, fila, columna, mapa)
     {
         CargaMaxima = cargaMaxima;
         Id = contadorId++;

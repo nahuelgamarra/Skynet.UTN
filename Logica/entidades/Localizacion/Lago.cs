@@ -9,7 +9,7 @@ namespace Logica.entidades.Localizacion
 {
     public class Lago : Localizacion
     {
-        public Lago(string nombre, int fila, int columna) : base(nombre, fila, columna)
+        public Lago(string nombre, int fila, int columna, Mapa mapa) : base(nombre, fila, columna, mapa)
         {
         }
 

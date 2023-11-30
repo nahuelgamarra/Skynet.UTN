@@ -11,12 +11,15 @@ namespace Logica.entidades
         public string Nombre { get; set; }
         public int Fila { get; set; }
         public int Columna { get; set; }
+        public Mapa Mapa { get; private set; }
 
-        public ElementoMapa(string nombre, int fila, int columna)
+        public ElementoMapa(string nombre, int fila, int columna, Mapa mapa)
         {
             Nombre = nombre;
             Fila = fila;
             Columna = columna;
+            Mapa = mapa;
+           mapa.AgregarElemento(this,Fila,Columna);
         }
         public virtual bool EstanEnLaMismaUbicacion(ElementoMapa otroElemento)
         {

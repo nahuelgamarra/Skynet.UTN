@@ -10,7 +10,7 @@ public class K9 : Operador
 {
 
 
-    public K9(int fila, int columna, double cargaMaxima) : base("K9", fila, columna, cargaMaxima)
+    public K9(int fila, int columna, double cargaMaxima, Mapa mapa) : base("K9", fila, columna, cargaMaxima, mapa)
     {
         // Inicializar propiedades específicas de K9
         Bateria = new Bateria(CapacidadBateria.MEDIANA);

@@ -8,9 +8,9 @@ using Logica.entidades.Operadores;
 namespace Logica.entidades.Localizacion
 {
 
-    internal class LugarDeReciclaje : Localizacion
+    public class LugarDeReciclaje : Localizacion
     {
-        public LugarDeReciclaje(string nombre, int fila, int columna) : base(nombre, fila, columna)
+        public LugarDeReciclaje(string nombre, int fila, int columna, Mapa mapa) : base(nombre, fila, columna, mapa)
         {
         }
 

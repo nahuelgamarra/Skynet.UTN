@@ -11,7 +11,7 @@ namespace Logica.entidades.Localizacion
     {
         private static int contadorId = 0;
 
-        protected Localizacion(string nombre, int fila, int columna) : base(nombre, fila, columna)
+        protected Localizacion(string nombre, int fila, int columna, Mapa mapa) : base(nombre, fila, columna, mapa)
         {
             
         }

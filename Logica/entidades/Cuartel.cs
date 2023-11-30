@@ -15,12 +15,11 @@
             public int Id { get; private set; }
             public HashSet<Carga> Cargas { get; private set; } = new HashSet<Carga>();
 
-            public Cuartel(int fila, int columna) : base("Cuartel", fila, columna)
+            public Cuartel(int fila, int columna, Mapa mapa) : base("Cuartel", fila, columna, mapa)
             {
                 Id = contadorId;
                 contadorId++;
             }
-
             public void AgregarElemento(Operador operador)
             {
                 ListaOperadores.Add(operador);

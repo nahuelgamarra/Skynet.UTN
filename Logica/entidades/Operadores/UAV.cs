@@ -6,7 +6,7 @@ namespace Logica.entidades.Operadores
     {
 
 
-        public UAV(int fila, int columna, double cargaMaxima) : base("UAV", fila, columna, cargaMaxima)
+        public UAV(int fila, int columna, double cargaMaxima, Mapa mapa) : base("UAV", fila, columna, cargaMaxima, mapa)
         {
             Bateria = new Bateria(CapacidadBateria.CHICA);
         }

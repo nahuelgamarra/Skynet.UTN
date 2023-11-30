@@ -11,7 +11,7 @@ namespace Logica.entidades.Localizacion
     {
         private int Reduccion;
 
-        public VertederoElectronico(string nombre, int fila, int columna) : base(nombre, fila, columna)
+        public VertederoElectronico(string nombre, int fila, int columna, Mapa mapa) : base(nombre, fila, columna, mapa)
         {
         }
 

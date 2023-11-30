@@ -6,7 +6,7 @@ namespace Logica.entidades.Operadores
     {
 
 
-        public M8(int fila, int columna, double cargaMaxima) : base("M8", fila, columna, cargaMaxima)
+        public M8(int fila, int columna, double cargaMaxima, Mapa mapa) : base("M8", fila, columna, cargaMaxima, mapa)
         {
             Bateria = new Bateria(CapacidadBateria.GRANDE);
         }
