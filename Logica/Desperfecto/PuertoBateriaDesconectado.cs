@@ -9,20 +9,20 @@ using System.Threading.Tasks;
 
 namespace Desperfecto
 {
-    public class BateriaPerforada : Desperfecto
+    public class PuertoBateriaDesconectado : Desperfecto
     {
-        public BateriaPerforada(string descripcion) : base(descripcion, TipoDesperfecto.BateriaPerforada)
+        public PuertoBateriaDesconectado(string descripcion) : base(descripcion, TipoDesperfecto.PuertoBateriaDesconectado)
         {
         }
 
         public override void AplicarDesperfecto(Operador operador)
         {
-            PerforarBateria(operador.Bateria);
+            DesconectarPuertoDeBateria(operador.Bateria);
         }
 
-        private void PerforarBateria(Bateria bateria)
+        private void DesconectarPuertoDeBateria(Bateria bateria)
         {
-            bateria.PerforarBateria();
+            bateria.DesconectarPuerto();
         }
     }
 }

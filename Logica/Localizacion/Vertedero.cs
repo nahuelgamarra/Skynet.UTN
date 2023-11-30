@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Desperfecto;
+using Logica.Desperfecto;
 using Logica.entidades;
+using Logica.Localizacion;
 using Logica.Operadores;
-
-namespace Logica.Localizacion
+namespace Localidades
 {
     public class Vertedero : Localizacion
     {
+        private List<Desperfecto.Desperfecto> desperfectos;
         private HashSet<Carga> cargas;
+
         public Vertedero(string nombre, int fila, int columna, Mapa mapa) : base(nombre, fila, columna, mapa)
         {
             PosibilidadDeDanio = 5;
+            desperfectos = GenerarListaDesperfectos();
             cargas = new HashSet<Carga>();
             CargarVertedero();
         }
@@ -31,7 +31,6 @@ namespace Logica.Localizacion
             {
                 Console.WriteLine(cargas.Count() + "  Luego de cargarlo");
             }
-
         }
 
         private void LlenarOperadorDeCargas(Operador operador)
@@ -44,13 +43,23 @@ namespace Logica.Localizacion
             }
 
         }
+
         private void RandomizarDanio(Operador operador)
         {
             Random random = new Random();
             int posibleDanio = random.Next(0, 101);
             if (posibleDanio < PosibilidadDeDanio)
             {
-                operador.SufrirDanio();
+                AplicarDesperfecto(operador);
+            }
+        }
+
+        private void AplicarDesperfecto(Operador operador)
+        {
+            foreach (var desperfecto in desperfectos)
+            {
+                desperfecto.AplicarDesperfecto(operador);
+                Console.WriteLine($"Se aplicó el desperfecto: {desperfecto.TipoDesperfecto}");
             }
         }
 
@@ -60,6 +69,19 @@ namespace Logica.Localizacion
             {
                 cargas.Add(new Carga());
             }
+        }
+
+        private List<Desperfecto.Desperfecto> GenerarListaDesperfectos()
+        {
+            return new List<Desperfecto.Desperfecto>
+        {
+            new MotorComprometido("Motor comprometido"),
+            new PinturaRayada("Se le rayo la pintura"),
+            new PuertoBateriaDesconectado("Puerto de batería desconectado"),
+            new ServoAtascado("Servo atascado"),
+            new BateriaPerforada("Batería perforada")
+            // Agrega más tipos de desperfectos según sea necesario
+        };
         }
     }
 }

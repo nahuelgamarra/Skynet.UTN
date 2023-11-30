@@ -9,6 +9,7 @@ namespace Logica.entidades
 
         public double CargaBateria { get; set; }
         private double velocidadDeDescarga;
+        public bool PuertoConectado { get; private set; } = true;
 
 
         public Bateria(CapacidadBateria capacidad)
@@ -20,11 +21,21 @@ namespace Logica.entidades
 
         public void CargarBateria(int cargaBateria)
         {
+            ComprobarSiSePuedeCargar();
             this.CargaBateria += cargaBateria;
+        }
+
+        private void ComprobarSiSePuedeCargar()
+        {
+            if (!PuertoConectado)
+            {
+                throw new Exception("No puede realizar esta operacion, el puerto se encuentra averiado");
+            }
         }
 
         public void GastarBateria(double gastarBateria)
         {
+            ComprobarSiSePuedeCargar();
             double bateriaLuegoDeGastar = this.CargaBateria - gastarBateria * velocidadDeDescarga;
            if(bateriaLuegoDeGastar < 0)
             {
@@ -34,6 +45,7 @@ namespace Logica.entidades
         }
         public void LlenarBateria()
         {
+            ComprobarSiSePuedeCargar();
             this.CargaBateria = (int)Capacidad;
         }
 
@@ -48,5 +60,15 @@ namespace Logica.entidades
         {
             this.velocidadDeDescarga = 5;
         }
+
+        public void DesconectarPuerto()
+        {
+            this.PuertoConectado = false;
+        }
+        public void RepararPuerto()
+        {
+            this.PuertoConectado= true;
+        }
+
     }
 }

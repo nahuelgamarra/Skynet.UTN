@@ -8,14 +8,14 @@ namespace Skynet.UTN
     {
         static void Main(string[] args)
         {
-            Mapa mapa = Mapa.ObtenerInstancia(15, 15);
-            Operador operador = new K9(0, 0,50, mapa);
+            Mapa mapa = Mapa.ObtenerInstancia(100, 100);
+            Operador operador = new UAV(0, 0,50, mapa);
             Console.WriteLine(operador.CargaMaxima);
             Console.WriteLine("Posicion antes de moverse " + operador.MostrarLocalizacion());
             operador.VelocidadOptima = 20;
          
         
-            operador.MoverseYConsumirBateria(12, 14);
+            operador.MoverseYConsumirBateria(82, 65);
      
             Console.WriteLine("Luego de moverse ");
             Console.WriteLine("Posicion despues de moverse " + operador.MostrarLocalizacion());

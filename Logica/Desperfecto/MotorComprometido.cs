@@ -1,15 +1,16 @@
-﻿using Logica.Operadores;
+﻿using Logica.Desperfecto;
+using Logica.Operadores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logica.Desperfecto
+namespace Desperfecto
 {
     public class MotorComprometido : Desperfecto
     {
-        public MotorComprometido(string descripcion) : base(descripcion)
+        public MotorComprometido(string descripcion) : base(descripcion, TipoDesperfecto.MotorComprometido)
         {
         }
 

@@ -1,4 +1,5 @@
 ﻿
+using Localidades;
 using Logica.entidades.Logica.entidades;
 using Logica.Localizacion;
 
