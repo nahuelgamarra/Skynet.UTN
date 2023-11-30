@@ -84,6 +84,20 @@ namespace Logica.entidades
         {
             return elementosMapa[fila, columna];
         }
+        public List<Localizacion.Localizacion> ObtenerLocalidadesEnPosicion(int fila, int columna)
+        {
+            List<Localizacion.Localizacion> localidades = new List<Localizacion.Localizacion>();
+
+            foreach (ElementoMapa elemento in elementosMapa[fila, columna])
+            {
+                if (elemento is Localizacion.Localizacion localizacion)
+                {
+                    localidades.Add(localizacion);
+                }
+            }
+
+            return localidades;
+        }
         public void GenerarLocalidadesAleatorias()
         {
             Random random = new Random();

@@ -215,16 +215,17 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
 
     private void ActualizarPosicion(int fila, int columna)
     {
-       
-
-        this.Fila = fila;
-        this.Columna = columna;
+        List<Localizacion.Localizacion> listaDeLocalidades= Mapa.ObtenerLocalidadesEnPosicion(fila, columna);
+      foreach(Localizacion.Localizacion localizacion in listaDeLocalidades)
+        {
+            localizacion.AplicarEfecto(this);
+        }
+        Mapa.MoverElemento(this, fila, columna);
     }
 
     internal void SufrirDanio()
     {
         Console.WriteLine("Estoy sufriendo algu  daño");
-
     }
 
     public abstract bool PuedeNadar();

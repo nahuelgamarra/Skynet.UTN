@@ -10,7 +10,15 @@ namespace Skynet.UTN
         static void Main(string[] args)
         {
             Mapa mapa = Mapa.ObtenerInstancia(5, 2);
-            Operador operador = new K9(0, 0, 5, mapa);
+            Operador operador = new UAV(0, 0, 5, mapa);
+            Console.WriteLine("Posicion antes de moverse " + operador.MostrarLocalizacion());
+            operador.VelocidadOptima = 20;
+         
+            mapa.MostrarMapa();
+            operador.MoverseYConsumirBateria(3, 1);
+     
+            Console.WriteLine("Luego de moverse ");
+            Console.WriteLine("Posicion despues de moverse " + operador.MostrarLocalizacion());
             mapa.MostrarMapa();
             /*
              // Crear un operador específico, por ejemplo, K9
