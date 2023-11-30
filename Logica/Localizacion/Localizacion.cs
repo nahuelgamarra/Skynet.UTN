@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logica.entidades.Operadores;
+using Logica.entidades;
+using Logica.Operadores;
 
-namespace Logica.entidades.Localizacion
+namespace Logica.Localizacion
 {
     public abstract class Localizacion : ElementoMapa
     {
@@ -14,13 +15,13 @@ namespace Logica.entidades.Localizacion
 
         protected Localizacion(string nombre, int fila, int columna, Mapa mapa) : base(nombre, fila, columna, mapa)
         {
-            this.ID = contadorId++;
+            ID = contadorId++;
         }
 
         public int Id { get; private set; }
         public string Name { get; private set; }
         public string Descripcion { get; private set; }
-       
+
         public abstract void AplicarEfecto(Operador operador);
 
 

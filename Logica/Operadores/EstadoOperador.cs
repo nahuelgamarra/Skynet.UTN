@@ -1,4 +1,4 @@
-﻿namespace Logica.entidades.Operadores
+﻿namespace Logica.Operadores
 {
     public enum EstadoOperador
     {
@@ -10,5 +10,6 @@
         PassBatery,
         Charging,
         SpendLoad,
+        Blocked_Load
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace Logica.entidades
 {
-    using global::Logica.entidades.Interfaces;
-    using global::Logica.entidades.Operadores;
+    using global::Logica.Interfaces;
+    using global::Logica.Operadores;
     using System;
     using System.Collections.Generic;
 

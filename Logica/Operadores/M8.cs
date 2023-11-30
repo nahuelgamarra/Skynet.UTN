@@ -1,6 +1,7 @@
 ﻿using System;
+using Logica.entidades;
 
-namespace Logica.entidades.Operadores
+namespace Logica.Operadores
 {
     public class M8 : Operador
     {

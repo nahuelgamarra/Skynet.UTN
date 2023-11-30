@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logica.entidades.Operadores;
+using Logica.entidades;
+using Logica.Operadores;
 
-namespace Logica.entidades.Localizacion
+namespace Logica.Localizacion
 {
     public class Vertedero : Localizacion
     {
         private HashSet<Carga> cargas;
         public Vertedero(string nombre, int fila, int columna, Mapa mapa) : base(nombre, fila, columna, mapa)
         {
-            this.PosibilidadDeDanio = 5;
-            this.cargas = new HashSet<Carga>();
+            PosibilidadDeDanio = 5;
+            cargas = new HashSet<Carga>();
             CargarVertedero();
         }
 
@@ -35,13 +36,13 @@ namespace Logica.entidades.Localizacion
 
         private void LlenarOperadorDeCargas(Operador operador)
         {
-            Console.WriteLine(cargas.Count()+ "  Antes de cargar operador");
+            Console.WriteLine(cargas.Count() + "  Antes de cargar operador");
             foreach (var carga in cargas)
             {
                 operador.AgregarCarga(carga);
                 cargas.Remove(carga);
             }
-           
+
         }
         private void RandomizarDanio(Operador operador)
         {

@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logica.entidades.Operadores;
+using Logica.entidades;
+using Logica.Operadores;
 
-namespace Logica.entidades.Localizacion
+namespace Logica.Localizacion
 {
 
     public class LugarDeReciclaje : Localizacion
@@ -13,7 +14,7 @@ namespace Logica.entidades.Localizacion
         private HashSet<Carga> cargasParaReciclar;
         public LugarDeReciclaje(string nombre, int fila, int columna, Mapa mapa) : base(nombre, fila, columna, mapa)
         {
-            this.cargasParaReciclar = new HashSet<Carga>();
+            cargasParaReciclar = new HashSet<Carga>();
         }
 
         public override void AplicarEfecto(Operador operador)
@@ -22,7 +23,8 @@ namespace Logica.entidades.Localizacion
             DejarCargaParaReciclar(operador);
             Console.WriteLine($"te llevas esta carga {operador.ObtenerPesoDeCargaActual()}");
         }
-       private void DejarCargaParaReciclar(Operador operador) {
+        private void DejarCargaParaReciclar(Operador operador)
+        {
             if (operador.Cargas.Any())
             {
                 cargasParaReciclar.UnionWith(operador.Cargas);

@@ -1,6 +1,5 @@
 ﻿using Logica.entidades;  // Asegúrate de incluir esta línea
-using Logica.entidades.Logica.entidades;
-using Logica.entidades.Operadores;
+using Logica.Operadores;
 
 
 namespace Skynet.UTN

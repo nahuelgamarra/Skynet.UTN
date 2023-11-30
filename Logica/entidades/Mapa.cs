@@ -1,5 +1,6 @@
-﻿using Logica.entidades.Localizacion;
+﻿
 using Logica.entidades.Logica.entidades;
+using Logica.Localizacion;
 
 namespace Logica.entidades
 {
@@ -142,7 +143,7 @@ namespace Logica.entidades
                             new Vertedero($"Vertedero_{i}_{j}", i, j, this);
                             break;
                         case 5:
-                            new VertederoElectronico($"VertederoElectronico_{i}_{j}", i, j, this);
+                            new VertederoElectronico($"VertederoElectronico_{i}_{j}", i, j, this, 20);
                             break;
                     }
                 }

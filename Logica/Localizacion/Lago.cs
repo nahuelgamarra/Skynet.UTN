@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logica.entidades.Operadores;
+using Logica.entidades;
+using Logica.Operadores;
 
-namespace Logica.entidades.Localizacion
+namespace Logica.Localizacion
 {
     public class Lago : Localizacion
     {

@@ -1,8 +1,9 @@
-﻿using Logica.entidades.Interfaces;
+﻿using Logica.entidades;
 using Logica.entidades.Logica.entidades;
+using Logica.Interfaces;
 
 
-namespace Logica.entidades.Operadores;
+namespace Logica.Operadores;
 
 public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
     ITransferirCarga<Cuartel>, IPuedeNadar
@@ -98,14 +99,25 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
     {
         try
         {
+            VerificarEstado();
             SuperaPesoMaximo(carga);
             Cargas.Add(carga);
         }
         catch (Exception ex)
         {
-            throw new Exception("No se pudo agregar la carga debido al peso excedido.");
+            throw new Exception(ex.Message);
         }
     }
+
+    private void VerificarEstado()
+    {
+       if (this.Estado== EstadoOperador.Blocked_Load)
+        {
+            throw new Exception("El servo se encuentra atascado,  no puede cargar ni descargar ");
+        }
+           
+    }
+
     public double ObtenerPesoDeCargaActual()
     {
         return Cargas.Sum(carga => carga.Peso);
@@ -113,7 +125,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
 
     private void SuperaPesoMaximo(Carga carga)
     {
-        if(ObtenerPesoDeCargaActual() + carga.Peso > CargaMaxima) throw new Exception("Supera el peso maximo soportado");
+        if (ObtenerPesoDeCargaActual() + carga.Peso > CargaMaxima) throw new Exception("Supera el peso maximo soportado");
     }
 
     private bool ContieneCarga(Carga carga)
@@ -213,8 +225,8 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
 
     private void ActualizarPosicion(int fila, int columna)
     {
-        List<Localizacion.Localizacion> listaDeLocalidades= Mapa.ObtenerLocalidadesEnPosicion(fila, columna);
-      foreach(Localizacion.Localizacion localizacion in listaDeLocalidades)
+        List<Localizacion.Localizacion> listaDeLocalidades = Mapa.ObtenerLocalidadesEnPosicion(fila, columna);
+        foreach (Localizacion.Localizacion localizacion in listaDeLocalidades)
         {
             localizacion.AplicarEfecto(this);
         }
@@ -227,6 +239,6 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
     }
 
     public abstract bool PuedeNadar();
-
+    
 }
 

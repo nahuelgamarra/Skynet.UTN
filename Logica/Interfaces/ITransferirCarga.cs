@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logica.entidades;
 
-namespace Logica.entidades.Interfaces
+namespace Logica.Interfaces
 {
     public interface ITransferirCarga<T>
     {

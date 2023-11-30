@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logica.entidades.Operadores;
+using Logica.entidades;
+using Logica.Operadores;
 
-namespace Logica.entidades.Localizacion
+namespace Logica.Localizacion
 {
     public class VertederoElectronico : Localizacion
     {
         private int Reduccion;
 
-        public VertederoElectronico(string nombre, int fila, int columna, Mapa mapa) : base(nombre, fila, columna, mapa)
+        public VertederoElectronico(string nombre, int fila, int columna, Mapa mapa, int Reduccion) : base(nombre, fila, columna, mapa)
         {
+            this.Reduccion = Reduccion;
         }
 
         public override void AplicarEfecto(Operador operador)
