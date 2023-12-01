@@ -1,6 +1,7 @@
 ﻿using Logica.entidades;
 using Logica.entidades.Logica.entidades;
 using Logica.Interfaces;
+using System.Runtime.CompilerServices;
 
 
 namespace Logica.Operadores;
@@ -12,7 +13,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
     private static int contadorId = 0;
     public int Id { get; private set; }
     public Bateria Bateria { get; set; }
-    public EstadoOperador Estado { get; set; }
+    public HashSet<EstadoOperador> Estados { get; set; } = new HashSet<EstadoOperador>();
     public double VelocidadOptima { get; set; }
 
     public HashSet<Carga> Cargas { get; set; } = new HashSet<Carga>();
@@ -111,7 +112,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
 
     private void VerificarEstado()
     {
-       if (this.Estado== EstadoOperador.Blocked_Load)
+       if (this.Estados.Contains(EstadoOperador.Blocked_Load))
         {
             throw new Exception("El servo se encuentra atascado,  no puede cargar ni descargar ");
         }
@@ -222,6 +223,11 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
         }
     }
 
+    public void CambiarBateria()
+    {
+        Bateria nueva = new Bateria(this.Bateria.Capacidad);
+        this.Bateria = nueva;
+    }
 
     private void ActualizarPosicion(int fila, int columna)
     {
@@ -232,6 +238,8 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
         }
         Mapa.MoverElemento(this, fila, columna);
     }
+
+    
 
     internal void SufrirDanio()
     {

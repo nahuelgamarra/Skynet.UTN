@@ -10,6 +10,7 @@
         PassBatery,
         Charging,
         SpendLoad,
+        Repaired,
         Blocked_Load
     }
 }

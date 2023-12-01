@@ -80,7 +80,7 @@ namespace Localidades
             new PuertoBateriaDesconectado("Puerto de batería desconectado"),
             new ServoAtascado("Servo atascado"),
             new BateriaPerforada("Batería perforada")
-            // Agrega más tipos de desperfectos según sea necesario
+         
         };
         }
     }

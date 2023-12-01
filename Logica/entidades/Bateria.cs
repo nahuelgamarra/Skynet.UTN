@@ -35,14 +35,21 @@ namespace Logica.entidades
 
         public void GastarBateria(double gastarBateria)
         {
-            ComprobarSiSePuedeCargar();
-            double bateriaLuegoDeGastar = this.CargaBateria - gastarBateria * velocidadDeDescarga;
-           if(bateriaLuegoDeGastar < 0)
+            try
             {
-                throw new Exception("Se quedo sin bateria");
+                ComprobarSiSePuedeCargar();
+                double bateriaLuegoDeGastar = this.CargaBateria - gastarBateria * velocidadDeDescarga;
+                if (bateriaLuegoDeGastar < 0)
+                {
+                    throw new Exception("Se quedo sin bateria");
+                }
+                this.CargaBateria = bateriaLuegoDeGastar;
+            }catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
-            this.CargaBateria = bateriaLuegoDeGastar;
-        }
+            }
+       
         public void LlenarBateria()
         {
             ComprobarSiSePuedeCargar();

@@ -21,7 +21,7 @@ namespace Desperfecto
 
         private void BloquearCargaYDescarga(Operador operador)
         {
-            operador.Estado = EstadoOperador.Blocked_Load;
+            operador.Estados.Add(EstadoOperador.Blocked_Load);
         }
     }
 }

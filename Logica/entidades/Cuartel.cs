@@ -61,11 +61,16 @@
             {
                 foreach (var operador in ListaOperadores)
                 {
-                    Console.WriteLine($"Operador id: {operador.Id}, estado {operador.Estado}");
+                    Console.WriteLine($"Operador id: {operador.Id}, estado  {string.Join(", ", operador.Estados)}");
                 }
             }
 
-            public void RepararOperador(Operador operador) { }
+            public void RepararOperador(Operador operador) {
+                operador.LlenarBateria();
+                operador.Estados.Clear();
+                operador.Bateria.RepararPuerto();
+                operador.Estados.Add(EstadoOperador.Repaired);
+            }
 
             public void RecargarBateria(Operador operador)
             {
@@ -79,7 +84,7 @@
                 {
                     if (operador.MismaUbicacion(elemento))
                     {
-                        Console.WriteLine($"Operador id: {operador.Id}, estado {operador.Estado}");
+                        Console.WriteLine($"Operador id: {operador.Id}, estado  {string.Join(", ", operador.Estados)}");
                     }
                 }
             }
