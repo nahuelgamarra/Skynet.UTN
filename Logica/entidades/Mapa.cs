@@ -37,8 +37,8 @@ namespace Logica.entidades
         {
             if (instancia == null)
             {
-                
-                 throw new InvalidOperationException("La instancia del mapa no ha sido creada.");
+
+                throw new InvalidOperationException("La instancia del mapa no ha sido creada.");
             }
             return instancia;
         }

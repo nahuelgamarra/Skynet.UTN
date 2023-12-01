@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Logica.entidades
+﻿namespace Logica.entidades
 {
     public class ElementoMapa
     {
@@ -19,7 +13,7 @@ namespace Logica.entidades
             Fila = fila;
             Columna = columna;
             Mapa = mapa;
-           mapa.AgregarElemento(this,Fila,Columna);
+            mapa.AgregarElemento(this, Fila, Columna);
         }
         public virtual bool EstanEnLaMismaUbicacion(ElementoMapa otroElemento)
         {

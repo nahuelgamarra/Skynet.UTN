@@ -1,7 +1,6 @@
 ﻿using Logica.entidades;
 using Logica.entidades.Logica.entidades;
 using Logica.Interfaces;
-using System.Runtime.CompilerServices;
 
 
 namespace Logica.Operadores;
@@ -112,11 +111,11 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
 
     private void VerificarEstado()
     {
-       if (this.Estados.Contains(EstadoOperador.Blocked_Load))
+        if (this.Estados.Contains(EstadoOperador.Blocked_Load))
         {
             throw new Exception("El servo se encuentra atascado,  no puede cargar ni descargar ");
         }
-           
+
     }
 
     public double ObtenerPesoDeCargaActual()
@@ -239,7 +238,7 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
         Mapa.MoverElemento(this, fila, columna);
     }
 
-    
+
 
     internal void SufrirDanio()
     {
@@ -247,6 +246,6 @@ public abstract class Operador : ElementoMapa, ITransferirCarga<Operador>,
     }
 
     public abstract bool PuedeNadar();
-    
+
 }
 

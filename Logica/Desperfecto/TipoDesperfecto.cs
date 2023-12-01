@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Logica.Desperfecto
+﻿namespace Logica.Desperfecto
 {
     public enum TipoDesperfecto
     {
-    MotorComprometido,
-    PinturaRayada,
-    PuertoBateriaDesconectado,
-    ServoAtascado,
-    BateriaPerforada
+        MotorComprometido,
+        PinturaRayada,
+        PuertoBateriaDesconectado,
+        ServoAtascado,
+        BateriaPerforada
     }
 }

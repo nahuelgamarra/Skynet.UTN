@@ -1,5 +1,4 @@
 ﻿using Desperfecto;
-using Logica.Desperfecto;
 using Logica.entidades;
 using Logica.Localizacion;
 using Logica.Operadores;
@@ -80,7 +79,7 @@ namespace Localidades
             new PuertoBateriaDesconectado("Puerto de batería desconectado"),
             new ServoAtascado("Servo atascado"),
             new BateriaPerforada("Batería perforada")
-         
+
         };
         }
     }

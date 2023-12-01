@@ -1,5 +1,4 @@
-﻿using System;
-using Logica.entidades;
+﻿using Logica.entidades;
 
 namespace Logica.Operadores
 {

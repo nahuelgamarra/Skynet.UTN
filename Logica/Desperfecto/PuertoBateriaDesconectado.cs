@@ -1,11 +1,6 @@
 ﻿using Logica.Desperfecto;
 using Logica.entidades;
 using Logica.Operadores;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Desperfecto
 {

@@ -44,12 +44,13 @@ namespace Logica.entidades
                     throw new Exception("Se quedo sin bateria");
                 }
                 this.CargaBateria = bateriaLuegoDeGastar;
-            }catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-            }
-       
+        }
+
         public void LlenarBateria()
         {
             ComprobarSiSePuedeCargar();
@@ -74,7 +75,7 @@ namespace Logica.entidades
         }
         public void RepararPuerto()
         {
-            this.PuertoConectado= true;
+            this.PuertoConectado = true;
         }
 
     }

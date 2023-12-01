@@ -65,7 +65,8 @@
                 }
             }
 
-            public void RepararOperador(Operador operador) {
+            public void RepararOperador(Operador operador)
+            {
                 operador.LlenarBateria();
                 operador.Estados.Clear();
                 operador.Bateria.RepararPuerto();
