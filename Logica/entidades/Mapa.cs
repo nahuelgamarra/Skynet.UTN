@@ -1,6 +1,6 @@
 ﻿
 using Localidades;
-using Logica.entidades.Logica.entidades;
+using Logica.entidades;
 using Logica.Localizacion;
 
 namespace Logica.entidades
@@ -11,8 +11,14 @@ namespace Logica.entidades
         private static Mapa instancia;
         private List<ElementoMapa>[,] elementosMapa;
 
+        public static int Filas { get;private set; }
+        public static int Columnas { get; private set; }
+
         private Mapa(int filas, int columnas)
         {
+            
+            Filas= filas;
+            Columnas= columnas;
             elementosMapa = new List<ElementoMapa>[filas, columnas];
             for (int i = 0; i < filas; i++)
             {

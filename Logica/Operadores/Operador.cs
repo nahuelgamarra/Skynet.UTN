@@ -1,5 +1,5 @@
 ﻿using Logica.entidades;
-using Logica.entidades.Logica.entidades;
+using Logica.entidades;
 using Logica.Interfaces;
 using System.Runtime.CompilerServices;
 

@@ -1,94 +1,94 @@
-﻿namespace Logica.entidades
+﻿using Logica.Interfaces;
+using Logica.Operadores;
+using System;
+using System.Collections.Generic;
+
+namespace Logica.entidades
 {
-    using global::Logica.Interfaces;
-    using global::Logica.Operadores;
-    using System;
-    using System.Collections.Generic;
-
-    namespace Logica.entidades
+    public class Cuartel : ElementoMapa, ITransferirCarga<Operador>
     {
-        public class Cuartel : ElementoMapa, ITransferirCarga<Operador>
+        private static int contadorId = 0;
+
+        public HashSet<Operador> ListaOperadores = new HashSet<Operador>();
+        public int Id { get; private set; }
+        public HashSet<Carga> Cargas { get; private set; } = new HashSet<Carga>();
+
+        public Cuartel(int fila, int columna, Mapa mapa) : base("Cuartel", fila, columna, mapa)
         {
-            private static int contadorId = 0;
+            Id = contadorId;
+            contadorId++;
+        }
 
-            public HashSet<Operador> ListaOperadores = new HashSet<Operador>();
-            public int Id { get; private set; }
-            public HashSet<Carga> Cargas { get; private set; } = new HashSet<Carga>();
+        public void AgregarOperador(Operador operador)
+        {
+            ListaOperadores.Add(operador);
+            operador.Fila = this.Fila;
+            operador.Columna = this.Columna;
+        }
 
-            public Cuartel(int fila, int columna, Mapa mapa) : base("Cuartel", fila, columna, mapa)
+        public void MostrarOperadoresEnCuartel()
+        {
+            foreach (Operador operador in ListaOperadores)
             {
-                Id = contadorId;
-                contadorId++;
+                Console.WriteLine($"Operador: {operador.Nombre} en ({operador.Fila}, {operador.Columna}) IdOperador: {operador.Id} Batería: {operador.Bateria.CargaBateria}");
             }
-            public void AgregarElemento(Operador operador)
-            {
-                ListaOperadores.Add(operador);
-                operador.Fila = this.Fila;
-                operador.Columna = this.Columna;
-            }
+        }
 
-            public void MostrarElementosEnCuartel()
+        public void TransferirCarga(Operador operadorDestino, Carga carga)
+        {
+            try
             {
-                foreach (Operador elemento in ListaOperadores)
+                ContieneCarga(carga);
+                operadorDestino.AgregarCarga(carga);
+                SacarCarga(carga);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void SacarCarga(Carga carga)
+        {
+            Cargas.Remove(carga);
+        }
+
+        private bool ContieneCarga(Carga carga)
+        {
+            return Cargas.Contains(carga) ? true : throw new Exception("No posee la carga que quiere transferir.");
+        }
+
+        public void ListarEstadoDeOperadores()
+        {
+            foreach (var operador in ListaOperadores)
+            {
+                Console.WriteLine($"Operador Id: {operador.Id}, Estado: {string.Join(", ", operador.Estados)}");
+            }
+        }
+
+        public void RepararOperador(Operador operador)
+        {
+            operador.LlenarBateria();
+            operador.Estados.Clear();
+            operador.Bateria.RepararPuerto();
+            operador.Estados.Add(EstadoOperador.Repaired);
+        }
+
+        public void RecargarBateria(Operador operador)
+        {
+            operador.Bateria.LlenarBateria();
+        }
+
+        public void ListarEstadoDeOperadoresEnLocalizacion(ElementoMapa elemento)
+        {
+            Console.WriteLine($"Operadores en la ubicación Fila: {elemento.Fila}, Columna: {elemento.Columna}");
+            foreach (var operador in ListaOperadores)
+            {
+                if (operador.MismaUbicacion(elemento))
                 {
-                    Console.WriteLine($"Elemento: {elemento.Nombre} en ({elemento.Fila}, {elemento.Columna}) idElemento {elemento.Id} Bateria {elemento.Bateria.CargaBateria}");
-                }
-            }
-
-            public void TransferirCarga(Operador operadorDestino, Carga carga)
-            {
-                try
-                {
-                    ContieneCarga(carga);
-                    operadorDestino.AgregarCarga(carga);
-                    SacarCarga(carga);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            }
-
-            private void SacarCarga(Carga carga)
-            {
-                Cargas.Remove(carga);
-            }
-            private bool ContieneCarga(Carga carga)
-            {
-                return this.Cargas.Contains(carga) ? true : throw new Exception("No posee la carga que quiere transferir ");
-            }
-            public void ListarEstadoDeOperadores()
-            {
-                foreach (var operador in ListaOperadores)
-                {
-                    Console.WriteLine($"Operador id: {operador.Id}, estado  {string.Join(", ", operador.Estados)}");
-                }
-            }
-
-            public void RepararOperador(Operador operador) {
-                operador.LlenarBateria();
-                operador.Estados.Clear();
-                operador.Bateria.RepararPuerto();
-                operador.Estados.Add(EstadoOperador.Repaired);
-            }
-
-            public void RecargarBateria(Operador operador)
-            {
-                operador.Bateria.LlenarBateria();
-            }
-
-            public void ListarEstadoDeOperadoresEnLocalizacion(ElementoMapa elemento)
-            {
-                Console.WriteLine($"LocalDataStoreSlot que esten en esta ubicacion Fila{elemento.Fila}, columna{elemento.Columna} ");
-                foreach (var operador in ListaOperadores)
-                {
-                    if (operador.MismaUbicacion(elemento))
-                    {
-                        Console.WriteLine($"Operador id: {operador.Id}, estado  {string.Join(", ", operador.Estados)}");
-                    }
+                    Console.WriteLine($"Operador Id: {operador.Id}, Estado: {string.Join(", ", operador.Estados)}");
                 }
             }
         }
     }
 }
-
