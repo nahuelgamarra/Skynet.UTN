@@ -2,6 +2,7 @@
 //Angel Gomez
 //Nahuel Gamarra
 
+using Localidades;
 using Logica.entidades;  // Asegúrate de incluir esta línea
 using Logica.entidades.Logica.entidades;
 using Logica.Operadores;
@@ -40,7 +41,7 @@ namespace Skynet.UTN
             cuartel.AgregarElemento(operador3);
 
 
-            Console.WriteLine($"Veremos cuantos operadores hay en el cuarte  {cuartel.ListaOperadores.Count}");
+            Console.WriteLine($"Veremos cuantos operadores hay en el cuartel  {cuartel.ListaOperadores.Count}");
 
 
 
@@ -93,8 +94,13 @@ namespace Skynet.UTN
             Console.WriteLine(operador.Bateria.Capacidad + " Y tiene esta bateria");
 
             Console.WriteLine(operador.MostrarLocalizacion() + "Aca esta el operador luego de moverse");
-
-
+            //prueba del metodo vertedero y reciclaje cercano
+            //cuartel.BuscarVertederoYReciclajeMasCercanos();
+            //fin de la prueba
+            cuartel.GuardarDatos();
+            //cuartel.DevolverDatosOperadores();
+            mapa.GuardarDatosMapa();
+            mapa.DevolverDatosMapa(); 
         }
     }
 }
