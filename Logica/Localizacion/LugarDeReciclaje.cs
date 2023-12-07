@@ -6,6 +6,7 @@ namespace Logica.Localizacion
 
     public class LugarDeReciclaje : Localizacion
     {
+        public List<Operador> Operadores { get; set; } 
         private HashSet<Carga> cargasParaReciclar;
         public LugarDeReciclaje(string nombre, int fila, int columna, Mapa mapa) : base(nombre, fila, columna, mapa)
         {
