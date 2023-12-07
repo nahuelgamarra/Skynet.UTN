@@ -2,6 +2,8 @@
 using Localidades;
 using Logica.entidades.Logica.entidades;
 using Logica.Localizacion;
+using Logica.Operadores;
+using System.Text.Json;
 
 namespace Logica.entidades
 {
@@ -23,7 +25,6 @@ namespace Logica.entidades
             }
             GenerarLocalidadesAleatorias();
         }
-
         public static Mapa ObtenerInstancia(int filas, int columnas)
         {
             if (instancia == null)
@@ -124,7 +125,8 @@ namespace Logica.entidades
                             new Lago($"Lago_{i}_{j}", i, j, this);
                             break;
                         case 1:
-                            new LugarDeReciclaje($"Reciclaje_{i}_{j}", i, j, this);
+                            LugarDeReciclaje lugarDeReciclaje = new LugarDeReciclaje($"LugarDeReciclaje_{i}_{j}", i, j, this);
+                            Cuartel.ListaReciclajes.Add(lugarDeReciclaje);
                             break;
                         case 2:
                             new TerrenoBaldio($"Terreno_{i}_{j}", i, j, this);
@@ -141,7 +143,8 @@ namespace Logica.entidades
                             }
                             break;
                         case 4:
-                            new Vertedero($"Vertedero_{i}_{j}", i, j, this);
+                            Vertedero vertedero = new Vertedero($"Vertedero_{i}_{j}", i, j, this);
+                            Cuartel.ListaVertederos.Add(vertedero);
                             break;
                         case 5:
                             new VertederoElectronico($"VertederoElectronico_{i}_{j}", i, j, this, 20);
@@ -151,7 +154,55 @@ namespace Logica.entidades
             }
         }
 
+        //transformando la lista bidimensional en una lista de listas para la serializacion
+        private List<List<ElementoMapa>> listaDeListas = new List<List<ElementoMapa>>();
+        private void ListaDeListas()
+        {
+            for (int i = 0; i < elementosMapa.GetLength(0); i++)
+            {
+                List<ElementoMapa> listaTemporal = new List<ElementoMapa>();
 
+                for (int j = 0; j < elementosMapa.GetLength(1); j++)
+                {
+                    listaTemporal.AddRange(elementosMapa[i, j]);
+                }
+
+                listaDeListas.Add(listaTemporal);
+            }
+        }
+
+        // persistencia de datos del mapa
+        public void GuardarDatosMapa()
+        {
+            // Serializar la lista elementosMapa a JSON
+            string path = Directory.GetCurrentDirectory();
+            path += "\\data";
+            Directory.CreateDirectory(path);
+            string fileName = "\\Mapa.json";
+            ListaDeListas();
+            string data = JsonSerializer.Serialize(listaDeListas);
+            File.WriteAllText(path + fileName, data);
+        }
+
+        public void DevolverDatosMapa()
+        {
+            // Deserializar la lista elementosMapa desde JSON
+            string path = Directory.GetCurrentDirectory();
+            path += "\\data";
+            string fileName = "\\Mapa.json";
+            string data = File.ReadAllText(path + fileName);
+            List<List<ElementoMapa>> listaDeListas = JsonSerializer.Deserialize<List<List<ElementoMapa>>>(data);// error de constructor sin parametros
+
+            ElementoMapa[,] elementosMapa = new ElementoMapa[listaDeListas.Count, listaDeListas[0].Count];
+
+            for (int i = 0; i < listaDeListas.Count; i++)
+            {
+                for (int j = 0; j < listaDeListas[i].Count; j++)
+                {
+                    elementosMapa[i, j] = listaDeListas[i][j];
+                }
+            }
+        }
+        //fin de persistencia de datos
     }
-
 }
