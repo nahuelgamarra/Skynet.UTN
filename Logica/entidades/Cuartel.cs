@@ -2,8 +2,12 @@
 {
     using global::Logica.Interfaces;
     using global::Logica.Operadores;
+    using global::Logica.Localizacion;
+    using Localidades;
     using System;
     using System.Collections.Generic;
+    using System.Text.Json;
+
 
     namespace Logica.entidades
     {
@@ -12,6 +16,10 @@
             private static int contadorId = 0;
 
             public HashSet<Operador> ListaOperadores = new HashSet<Operador>();
+            //Lista de Vertederos y reciclajes
+            public static List<Vertedero> ListaVertederos = new List<Vertedero>();
+            public static List<LugarDeReciclaje> ListaReciclajes = new List<LugarDeReciclaje>();
+            //fin de las listas 
             public int Id { get; private set; }
             public HashSet<Carga> Cargas { get; private set; } = new HashSet<Carga>();
 
@@ -59,7 +67,7 @@
             }
             public void ListarEstadoDeOperadores()
             {
-                foreach (var operador in ListaOperadores)
+                foreach (Operador operador in ListaOperadores)
                 {
                     Console.WriteLine($"Operador id: {operador.Id}, estado  {string.Join(", ", operador.Estados)}");
                 }
@@ -81,7 +89,7 @@
             public void ListarEstadoDeOperadoresEnLocalizacion(ElementoMapa elemento)
             {
                 Console.WriteLine($"LocalDataStoreSlot que esten en esta ubicacion Fila{elemento.Fila}, columna{elemento.Columna} ");
-                foreach (var operador in ListaOperadores)
+                foreach (Operador operador in ListaOperadores)
                 {
                     if (operador.MismaUbicacion(elemento))
                     {
@@ -89,7 +97,93 @@
                     }
                 }
             }
+
+            //Codigo para mover operadores en standby al vertedero y luego al reciclaje
+            
+            public void BuscarVertederoYReciclajeMasCercanos()
+            {
+                // Busca el vertedero y el reciclaje más cercanos para cada operador
+                foreach (Operador operador in ListaOperadores)
+                {
+                    // Filtra los operadores que están en estado StandBy
+                    List<Operador> operadores = ListaOperadores.Where(o => o.Estados.Contains(EstadoOperador.StandBy)).ToList();
+
+                    // Calcula la distancia entre la ubicación del operador y cada vertedero
+                    Dictionary<Vertedero, double> distanciasVertederos = new Dictionary<Vertedero, double>();
+                    foreach (Vertedero vertedero in ListaVertederos)
+                    {
+                        int dx = operador.Fila - vertedero.Fila;
+                        int dy = operador.Columna - vertedero.Columna;
+                        double distancia = Math.Sqrt(dx * dx + dy * dy);
+                        distanciasVertederos.Add(vertedero, distancia);
+                    }
+
+
+                    // Encuentra el vertedero más cercano
+                    Vertedero vertederoMasCercano = distanciasVertederos.OrderBy(d => d.Value).First().Key;
+
+                    // Cambia el estado del operador a "On"
+                    operador.Estados.Add(EstadoOperador.On);
+
+                    // Busca el reciclaje más cercano desde el vertedero
+                    Dictionary<LugarDeReciclaje, double> distanciasReciclajes = new Dictionary<LugarDeReciclaje, double>();
+                    foreach (LugarDeReciclaje reciclaje in ListaReciclajes)
+                    {
+                        int dx = vertederoMasCercano.Fila - reciclaje.Fila;
+                        int dy = vertederoMasCercano.Columna - reciclaje.Columna;
+                        double distancia = Math.Sqrt(dx * dx + dy * dy);
+                        distanciasReciclajes.Add(reciclaje, distancia);
+                    }
+
+
+                    // Encuentra el reciclaje más cercano
+                    LugarDeReciclaje reciclajeMasCercano = distanciasReciclajes.OrderBy(d => d.Value).First().Key;
+
+                    // Usa el método SacarCarga para cada operador en el reciclaje
+                    foreach (Operador operadorReciclaje in reciclajeMasCercano.Operadores)
+                    {
+                        operadorReciclaje.SacarCarga(new Carga());
+                    }
+                }
+            }
+            //fin del codigo de movimiento. borrar o modificar a gusto
+
+            // persistencia de datos de los operadores
+            public void GuardarDatos()
+            {
+                // Serializar solo el campo Estados de la lista ListaOperadores a JSON
+                string path = Directory.GetCurrentDirectory();
+                path += "\\data";
+                Directory.CreateDirectory(path);
+                string fileName = "\\EstadosDeOperadores.json";
+                string data = JsonSerializer.Serialize(ListaOperadores);
+                File.WriteAllText(path + fileName, data);
+            }
+
+            public void DevolverDatosOperadores()
+            {
+                // Deserializar la lista ListaOperadores desde JSON
+                string path = Directory.GetCurrentDirectory();
+                path += "\\data";
+                string fileName = "\\EstadosDeOperadores.json";
+                string data = File.ReadAllText(path + fileName);
+                List<Operador> n = JsonSerializer.Deserialize<List<Operador>>(data);//problema con la deserializacion, necesita un constructor vacio
+                foreach (Operador operador in n)
+                {
+                    if (operador is K9)
+                    {
+                        ListaOperadores.Add(operador as K9);
+                    }
+                    else if (operador is UAV)
+                    {
+                        ListaOperadores.Add(operador as UAV);
+                    }
+                    else
+                    {
+                        ListaOperadores.Add(operador as M8);
+                    }
+                }
+            }
         }
     }
 }
-
