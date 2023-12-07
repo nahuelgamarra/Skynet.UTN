@@ -13,9 +13,10 @@ namespace Logica.Localizacion
             ID = contadorId++;
         }
 
+        /*
         public int Id { get; private set; }
         public string Name { get; private set; }
-        public string Descripcion { get; private set; }
+        public string Descripcion { get; private set; }*/
 
         public abstract void AplicarEfecto(Operador operador);
 
